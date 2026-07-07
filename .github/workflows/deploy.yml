@@ -1,0 +1,42 @@
+name: Build e publicação na branch deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar build de produção
+        run: npm run build
+        env:
+          VITE_BASE44_APP_ID: 6a0cbe38006b2f3439037e1d
+          VITE_BASE44_APP_BASE_URL: https://omniscient-escuta-segura-rede.base44.app
+
+      - name: Publicar build na branch deploy
+        run: |
+          cp scripts/server-deploy.sh dist/
+          cd dist
+          git init -b deploy
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Build de $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" deploy

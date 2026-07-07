@@ -1,0 +1,53 @@
+{
+  "name": "Profissional",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "specialty": {
+      "type": "string"
+    },
+    "attendance_type": {
+      "type": "string",
+      "enum": [
+        "presencial",
+        "online",
+        "chat",
+        "presencial_online"
+      ]
+    },
+    "available": {
+      "type": "boolean",
+      "default": true
+    },
+    "phone": {
+      "type": "string"
+    },
+    "institution": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "specialty"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

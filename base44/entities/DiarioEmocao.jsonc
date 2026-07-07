@@ -1,0 +1,56 @@
+{
+  "name": "DiarioEmocao",
+  "type": "object",
+  "properties": {
+    "anonymous_id": {
+      "type": "string",
+      "description": "ID an\u00f4nimo da usu\u00e1ria"
+    },
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data do registro"
+    },
+    "emocao": {
+      "type": "string",
+      "enum": [
+        "otima",
+        "bem",
+        "neutro",
+        "triste",
+        "muito_triste"
+      ],
+      "description": "Emo\u00e7\u00e3o selecionada"
+    },
+    "nota": {
+      "type": "string",
+      "description": "Nota curta sobre o sentimento"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags de contexto"
+    }
+  },
+  "required": [
+    "anonymous_id",
+    "data",
+    "emocao"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

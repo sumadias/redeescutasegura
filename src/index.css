@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-lora: 'Lora', Georgia, serif;
+    --font-inter: 'Inter', sans-serif;
+    --background: 40 14% 97%;
+    --foreground: 20 6% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 6% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 6% 15%;
+    --primary: 175 76% 26%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 24 56% 34%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 40 10% 94%;
+    --muted-foreground: 24 5% 45%;
+    --accent: 166 76% 97%;
+    --accent-foreground: 175 76% 20%;
+    --destructive: 0 74% 42%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 20 6% 90%;
+    --input: 20 6% 90%;
+    --ring: 175 76% 26%;
+    --chart-1: 175 76% 26%;
+    --chart-2: 24 56% 34%;
+    --chart-3: 140 50% 40%;
+    --chart-4: 45 90% 55%;
+    --chart-5: 0 74% 42%;
+    --radius: 0.75rem;
+    --sidebar-background: 20 6% 12%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 175 76% 36%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 20 6% 20%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 20 6% 22%;
+    --sidebar-ring: 175 76% 36%;
+  }
+
+  .dark {
+    --background: 20 6% 10%;
+    --foreground: 0 0% 95%;
+    --card: 20 6% 14%;
+    --card-foreground: 0 0% 95%;
+    --popover: 20 6% 14%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 175 76% 36%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 24 56% 44%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 20 6% 18%;
+    --muted-foreground: 24 5% 60%;
+    --accent: 175 40% 18%;
+    --accent-foreground: 175 76% 80%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 20 6% 22%;
+    --input: 20 6% 22%;
+    --ring: 175 76% 36%;
+    --chart-1: 175 76% 36%;
+    --chart-2: 24 56% 44%;
+    --chart-3: 140 50% 55%;
+    --chart-4: 45 80% 60%;
+    --chart-5: 0 60% 50%;
+    --sidebar-background: 20 6% 8%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 175 76% 36%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 20 6% 16%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 20 6% 18%;
+    --sidebar-ring: 175 76% 36%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-inter);
+    font-size: 16px;
+  }
+  h1, h2, h3, .font-heading {
+    font-family: var(--font-lora);
+  }
+  .font-lora {
+    font-family: var(--font-lora);
+  }
+  .font-inter {
+    font-family: var(--font-inter);
+  }
+  /* Foco visível WCAG 2.1 AA — garante anel visível em todos os elementos interativos */
+  :focus-visible {
+    outline: 3px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}

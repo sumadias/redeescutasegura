@@ -1,0 +1,121 @@
+{
+  "name": "Servico",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "delegacia",
+        "pericia",
+        "policiamento",
+        "creas",
+        "orgao_gestao",
+        "cram",
+        "defensoria",
+        "judiciario",
+        "ministerio_publico",
+        "casa_acolhimento",
+        "hospital",
+        "upa",
+        "universidade",
+        "ong",
+        "delegacia_old",
+        "hospital_old",
+        "cras",
+        "defensoria_old",
+        "ong_old",
+        "upa_old",
+        "universidade_old"
+      ]
+    },
+    "address": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "hours": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "serves_all_genders": {
+      "type": "boolean",
+      "default": true,
+      "description": "Atende todos os g\u00eaneros \u2014 transpar\u00eancia de inclus\u00e3o"
+    },
+    "inclusion_notes": {
+      "type": "string",
+      "description": "Notas sobre pol\u00edtica de atendimento inclusivo"
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verified_by": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "acessibilidade_rampa": {
+      "type": "boolean",
+      "default": false
+    },
+    "acessibilidade_elevador": {
+      "type": "boolean",
+      "default": false
+    },
+    "acessibilidade_banheiro": {
+      "type": "boolean",
+      "default": false
+    },
+    "acessibilidade_libras": {
+      "type": "boolean",
+      "default": false
+    },
+    "acessibilidade_libras_agendado": {
+      "type": "boolean",
+      "default": false
+    },
+    "acessibilidade_braille": {
+      "type": "boolean",
+      "default": false
+    },
+    "acessibilidade_notas": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "type",
+    "address",
+    "serves_all_genders"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": null,
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

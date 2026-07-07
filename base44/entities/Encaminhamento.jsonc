@@ -1,0 +1,73 @@
+{
+  "name": "Encaminhamento",
+  "type": "object",
+  "properties": {
+    "anonymous_id": {
+      "type": "string",
+      "description": "ID an\u00f4nimo da usu\u00e1ria"
+    },
+    "service_name": {
+      "type": "string"
+    },
+    "service_type": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pendente",
+        "em_atendimento",
+        "concluido"
+      ],
+      "default": "pendente"
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "verde",
+        "amarelo",
+        "vermelho"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "anonymous_id",
+    "service_name"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

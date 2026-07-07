@@ -1,0 +1,119 @@
+{
+  "name": "Consulta",
+  "type": "object",
+  "properties": {
+    "anonymous_id": {
+      "type": "string",
+      "description": "ID an\u00f4nimo da pessoa atendida (sens\u00edvel)"
+    },
+    "profissional_id": {
+      "type": "string",
+      "description": "ID do profissional (sens\u00edvel)"
+    },
+    "profissional_nome": {
+      "type": "string"
+    },
+    "profissional_especialidade": {
+      "type": "string"
+    },
+    "data": {
+      "type": "string",
+      "format": "date",
+      "description": "Data da consulta (sens\u00edvel)"
+    },
+    "horario": {
+      "type": "string",
+      "description": "Hor\u00e1rio no formato HH:MM (sens\u00edvel)"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "psicologico",
+        "juridico",
+        "social"
+      ],
+      "default": "social"
+    },
+    "modalidade": {
+      "type": "string",
+      "enum": [
+        "presencial",
+        "online"
+      ],
+      "default": "online"
+    },
+    "recorrente": {
+      "type": "boolean",
+      "default": false
+    },
+    "frequencia": {
+      "type": "string",
+      "enum": [
+        "semanal",
+        "quinzenal",
+        "mensal"
+      ],
+      "description": "Frequ\u00eancia para consultas recorrentes"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "agendada",
+        "confirmada",
+        "realizada",
+        "cancelada"
+      ],
+      "default": "agendada"
+    },
+    "lembrete_enviado": {
+      "type": "boolean",
+      "default": false
+    },
+    "notas": {
+      "type": "string"
+    },
+    "email_contato": {
+      "type": "string",
+      "description": "E-mail opcional para lembrete discreto (sens\u00edvel)"
+    }
+  },
+  "required": [
+    "anonymous_id",
+    "profissional_id",
+    "data",
+    "horario",
+    "tipo"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

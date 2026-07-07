@@ -1,0 +1,49 @@
+{
+  "name": "ItemSalvo",
+  "type": "object",
+  "properties": {
+    "anonymous_id": {
+      "type": "string",
+      "description": "ID an\u00f4nimo da usu\u00e1ria"
+    },
+    "tipo": {
+      "type": "string",
+      "enum": [
+        "curso",
+        "conteudo_arte"
+      ],
+      "description": "Tipo do item salvo"
+    },
+    "item_id": {
+      "type": "string",
+      "description": "ID do item salvo"
+    },
+    "item_titulo": {
+      "type": "string",
+      "description": "T\u00edtulo do item para exibi\u00e7\u00e3o"
+    },
+    "item_path": {
+      "type": "string",
+      "description": "Caminho de navega\u00e7\u00e3o para o item"
+    }
+  },
+  "required": [
+    "anonymous_id",
+    "tipo",
+    "item_id"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

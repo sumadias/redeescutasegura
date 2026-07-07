@@ -1,0 +1,102 @@
+{
+  "name": "UserProfile",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "ID do sistema de autentica\u00e7\u00e3o"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "Nome social ou forma de chamada preferida (sens\u00edvel)"
+    },
+    "pronoun": {
+      "type": "string",
+      "enum": [
+        "ela/dela",
+        "ele/dele",
+        "elu/delu",
+        "outro",
+        "prefiro_nao_dizer"
+      ],
+      "description": "Pronome preferido (sens\u00edvel, opcional)"
+    },
+    "gender_identity": {
+      "type": "string",
+      "enum": [
+        "mulher_cis",
+        "mulher_trans",
+        "homem_cis",
+        "homem_trans",
+        "nao_binario",
+        "outro",
+        "prefiro_nao_dizer"
+      ],
+      "description": "Identidade de g\u00eanero (sens\u00edvel, opcional)"
+    },
+    "gender_custom": {
+      "type": "string",
+      "description": "Campo livre para identidade de g\u00eanero (sens\u00edvel)"
+    },
+    "notification_email": {
+      "type": "string",
+      "description": "E-mail para notifica\u00e7\u00f5es discretas (sens\u00edvel, opcional)"
+    },
+    "notification_preference": {
+      "type": "string",
+      "enum": [
+        "email",
+        "push",
+        "nenhum"
+      ],
+      "default": "nenhum",
+      "description": "Prefer\u00eancia de notifica\u00e7\u00e3o"
+    },
+    "safe_mode_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Modo discreto ativo"
+    },
+    "anonymous_id": {
+      "type": "string",
+      "description": "ID an\u00f4nimo para opera\u00e7\u00f5es sem vincular ao user_id"
+    }
+  },
+  "required": [
+    "user_id"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

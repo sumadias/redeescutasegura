@@ -1,0 +1,76 @@
+{
+  "name": "PlanoSeguranca",
+  "type": "object",
+  "properties": {
+    "anonymous_id": {
+      "type": "string",
+      "description": "ID an\u00f4nimo da pessoa"
+    },
+    "contatos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "telefone": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "At\u00e9 3 contatos de confian\u00e7a"
+    },
+    "lugar_seguro": {
+      "type": "string",
+      "description": "Endere\u00e7o ou servi\u00e7o seguro para ir"
+    },
+    "checklist": {
+      "type": "object",
+      "description": "Itens para levar",
+      "properties": {
+        "documentos": {
+          "type": "boolean",
+          "default": false
+        },
+        "remedios": {
+          "type": "boolean",
+          "default": false
+        },
+        "chaves": {
+          "type": "boolean",
+          "default": false
+        },
+        "dinheiro": {
+          "type": "boolean",
+          "default": false
+        },
+        "itens_criancas": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "palavra_codigo": {
+      "type": "string",
+      "description": "Palavra-c\u00f3digo combinada com pessoas de confian\u00e7a"
+    }
+  },
+  "required": [
+    "anonymous_id"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "CartaPessoal",
+  "type": "object",
+  "properties": {
+    "anonymous_id": {
+      "type": "string",
+      "description": "ID an\u00f4nimo da pessoa"
+    },
+    "titulo": {
+      "type": "string"
+    },
+    "conteudo": {
+      "type": "string",
+      "description": "Texto da carta (sens\u00edvel)"
+    },
+    "abrir_em": {
+      "type": "string",
+      "format": "date",
+      "description": "Data em que a carta se abre"
+    },
+    "criada_em": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "anonymous_id",
+    "conteudo",
+    "abrir_em"
+  ],
+  "rls": {
+    "create": {
+      "created_by_id": "{{user.id}}"
+    },
+    "read": {
+      "created_by_id": "{{user.id}}"
+    },
+    "update": {
+      "created_by_id": "{{user.id}}"
+    },
+    "delete": {
+      "created_by_id": "{{user.id}}"
+    }
+  }
+}
