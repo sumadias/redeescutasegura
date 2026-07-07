@@ -9,6 +9,7 @@ import CanvasDesenho from "@/components/diario/CanvasDesenho";
 import GravadorAudio from "@/components/diario/GravadorAudio";
 import { base44 } from "@/api/base44Client";
 import { getOrCreateAnonymousId } from "@/lib/anonymousId";
+import { toast } from "@/components/ui/use-toast";
 
 const EMOCOES = [
   { value: "otima",       emoji: "😊", label: "Ótima" },
@@ -100,7 +101,17 @@ export default function DiarioEmocoes() {
       }
       await carregarHistorico();
       setSalvo(true);
-    } catch {}
+      toast({ title: "Registro salvo" });
+    } catch (e) {
+      const sessao = e?.status === 401 || e?.status === 403;
+      toast({
+        variant: "destructive",
+        title: sessao ? "Sua sessão expirou" : "Não foi possível salvar",
+        description: sessao
+          ? "Entre novamente para guardar seu registro com segurança."
+          : "Verifique sua conexão e tente novamente.",
+      });
+    }
     setSalvando(false);
   }
 

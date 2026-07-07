@@ -4,6 +4,7 @@ import { ArrowLeft, Phone, Trash2, Save, Plus, X } from "lucide-react";
 import { motion } from "framer-motion";
 import QuickExitButton from "@/components/QuickExitButton";
 import { base44 } from "@/api/base44Client";
+import { toast } from "@/components/ui/use-toast";
 import { getOrCreateAnonymousId } from "@/lib/anonymousId";
 import { GravuraAbrigo } from "@/components/art/Gravuras";
 
@@ -81,7 +82,17 @@ export default function PlanoSeguranca() {
         setPlanoId(novo.id);
       }
       setSalvo(true);
-    } catch {}
+      toast({ title: "Plano de segurança salvo" });
+    } catch (e) {
+      const sessao = e?.status === 401 || e?.status === 403;
+      toast({
+        variant: "destructive",
+        title: sessao ? "Sua sessão expirou" : "Não foi possível salvar",
+        description: sessao
+          ? "Entre novamente para guardar seu plano com segurança."
+          : "Verifique sua conexão e tente novamente.",
+      });
+    }
     setSalvando(false);
   }
 

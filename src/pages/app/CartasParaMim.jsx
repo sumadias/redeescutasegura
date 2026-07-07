@@ -73,7 +73,17 @@ export default function CartasParaMim() {
       setConteudo(""); setTitulo(""); setOpcaoIdx(0); setDataCustom("");
       setEscrevendo(false);
       await carregar();
-    } catch {}
+      toast({ title: "Carta guardada" });
+    } catch (e) {
+      const sessao = e?.status === 401 || e?.status === 403;
+      toast({
+        variant: "destructive",
+        title: sessao ? "Sua sessão expirou" : "Não foi possível guardar a carta",
+        description: sessao
+          ? "Entre novamente para guardar sua carta com segurança."
+          : "Verifique sua conexão e tente novamente.",
+      });
+    }
     setSalvando(false);
   }
 
