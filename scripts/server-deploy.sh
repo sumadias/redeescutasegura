@@ -2,12 +2,26 @@
 # Roda no servidor da HostGator (via cron): copia o build já baixado pelo git
 # para a pasta pública do domínio adicional. A branch "deploy" contém apenas o
 # resultado do build (dist/) + este script.
-#
-# O docroot do domínio adicional pode variar; por isso o destino é
-# parametrizável pela variável DEPLOY_DEST definida no cron. O padrão abaixo
-# cobre o layout usual de domínio adicional no cPanel.
 SRC="$HOME/redeescutasegura-deploy"
-DEST="${DEPLOY_DEST:-$HOME/public_html/redeescutasegura.com.br}"
+
+# Descobre o docroot do domínio adicional. Prioridade:
+#   1) variável DEPLOY_DEST (se definida no cron)
+#   2) primeiro caminho padrão do cPanel que já exista (o cPanel cria a pasta
+#      do addon domain ao adicioná-lo)
+#   3) fallback para o layout mais comum
+if [ -n "$DEPLOY_DEST" ]; then
+  DEST="$DEPLOY_DEST"
+else
+  DEST=""
+  for cand in \
+    "$HOME/public_html/redeescutasegura.com.br" \
+    "$HOME/public_html/redeescutasegura" \
+    "$HOME/redeescutasegura.com.br" \
+    "$HOME/public_html/redeescutasegura.com.br/public_html"; do
+    if [ -d "$cand" ]; then DEST="$cand"; break; fi
+  done
+  DEST="${DEST:-$HOME/public_html/redeescutasegura.com.br}"
+fi
 
 mkdir -p "$DEST"
 
@@ -23,3 +37,5 @@ fi
 if [ -f "$DEST/index.php" ] && grep -qi "hostgator" "$DEST/index.php"; then
   rm -f "$DEST/index.php"
 fi
+
+echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] deploy OK -> $DEST"
