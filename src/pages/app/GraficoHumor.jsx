@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import QuickExitButton from "@/components/QuickExitButton";
 import { base44 } from "@/api/base44Client";
-import { getOrCreateAnonymousId } from "@/lib/anonymousId";
 
 const EMOCAO_VALOR = {
   otima: 5,
@@ -98,12 +97,11 @@ export default function GraficoHumor() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const anonId = getOrCreateAnonymousId();
     const trinta = new Date();
     trinta.setDate(trinta.getDate() - 30);
     const cutoff = trinta.toISOString().split("T")[0];
 
-    base44.entities.DiarioEmocao.filter({ anonymous_id: anonId }, "data", 60)
+    base44.entities.DiarioEmocao.filter({}, "data", 60)
       .then(registros => {
         const recentes = registros
           .filter(r => r.data >= cutoff)

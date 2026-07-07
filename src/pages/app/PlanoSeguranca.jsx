@@ -32,7 +32,7 @@ export default function PlanoSeguranca() {
   const [apagando, setApagando] = useState(false);
 
   useEffect(() => {
-    base44.entities.PlanoSeguranca.filter({ anonymous_id: ANONYMOUS_ID }).then(data => {
+    base44.entities.PlanoSeguranca.filter({}, "-created_date", 1).then(data => {
       if (data.length > 0) {
         const p = data[0];
         setPlanoId(p.id);

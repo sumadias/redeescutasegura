@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Bookmark, BookmarkX, GraduationCap, Palette } from "lucide-react";
 import QuickExitButton from "@/components/QuickExitButton";
 import { base44 } from "@/api/base44Client";
-import { getOrCreateAnonymousId } from "@/lib/anonymousId";
 import { GravuraSol } from "@/components/art/Gravuras";
 
 const TIPO_ICON = {
@@ -25,10 +24,9 @@ export default function MeusSalvos() {
   const navigate = useNavigate();
   const [salvos, setSalvos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const anonId = getOrCreateAnonymousId();
 
   useEffect(() => {
-    base44.entities.ItemSalvo.filter({ anonymous_id: anonId }, "-created_date")
+    base44.entities.ItemSalvo.filter({}, "-created_date")
       .then(setSalvos)
       .catch(() => {})
       .finally(() => setLoading(false));

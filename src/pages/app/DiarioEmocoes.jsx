@@ -68,7 +68,7 @@ export default function DiarioEmocoes() {
   async function carregarHistorico() {
     setCarregando(true);
     try {
-      const data = await base44.entities.DiarioEmocao.filter({ anonymous_id: ANONYMOUS_ID }, "-data", 30);
+      const data = await base44.entities.DiarioEmocao.filter({}, "-data", 30);
       setHistorico(data);
       const hoje = data.find(r => r.data === today);
       if (hoje) {

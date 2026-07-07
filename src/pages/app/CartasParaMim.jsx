@@ -47,7 +47,7 @@ export default function CartasParaMim() {
   async function carregar() {
     setCarregando(true);
     try {
-      const data = await base44.entities.CartaPessoal.filter({ anonymous_id: ANONYMOUS_ID }, "-criada_em", 50);
+      const data = await base44.entities.CartaPessoal.filter({}, "-criada_em", 50);
       setCartas(data);
     } catch {}
     setCarregando(false);
