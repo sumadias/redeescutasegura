@@ -45,7 +45,7 @@ export default function TrilhaRecomeco() {
           <GravuraSol size={140} color="#9A3412" opacity={0.10} />
         </div>
         <button
-          onClick={() => navigate("/app/menu")}
+          onClick={() => navigate("/app/meu-espaco")}
           className="flex items-center gap-2 text-sm mb-4 focus:outline-none focus:ring-2 rounded"
           style={{ color: "#78716C" }}
         >

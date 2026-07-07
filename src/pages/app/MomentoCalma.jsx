@@ -209,7 +209,7 @@ export default function MomentoCalma() {
             <GravuraGota size={140} color="#0F766E" opacity={0.10} />
           </div>
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/app/meu-espaco")}
             className="p-2 rounded-xl hover:bg-stone-100 transition-colors focus:outline-none focus:ring-2"
             aria-label="Voltar"
           >

@@ -159,7 +159,7 @@ export default function DiarioEmocoes() {
       <div className="px-4 pt-14 pb-10 max-w-md mx-auto w-full space-y-5">
         {/* Navegação */}
         <button
-          onClick={() => navigate("/app/menu")}
+          onClick={() => navigate("/app/meu-espaco")}
           className="flex items-center gap-2 text-sm focus:outline-none focus:ring-2 rounded"
           style={{ color: "#78716C" }}
         >

@@ -116,7 +116,7 @@ export default function PlanoSeguranca() {
       <QuickExitButton />
 
       <div className="px-4 pt-14 pb-12 max-w-md mx-auto w-full space-y-6">
-        <button onClick={() => navigate("/app/menu")} className="flex items-center gap-2 text-sm focus:outline-none focus:ring-2 rounded" style={{ color: "#78716C" }}>
+        <button onClick={() => navigate("/app/meu-espaco")} className="flex items-center gap-2 text-sm focus:outline-none focus:ring-2 rounded" style={{ color: "#78716C" }}>
           <ArrowLeft className="w-4 h-4" /> Voltar
         </button>
 
