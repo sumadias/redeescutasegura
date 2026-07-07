@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { UserPlus, Mail, Lock, Loader2, Info } from "lucide-react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import AuthLayout from "@/components/AuthLayout";
-import GoogleIcon from "@/components/GoogleIcon";
 import { toast } from "@/components/ui/use-toast";
 
 export default function Register() {
@@ -66,11 +65,6 @@ export default function Register() {
       setError(err.message || "Não foi possível reenviar o código.");
     }
   };
-
-  const handleGoogle = () => {
-    base44.auth.loginWithProvider("google", "/app/menu");
-  };
-  // TODO: habilitar Microsoft quando disponível na plataforma
 
   if (showOtp) {
     return (
@@ -147,25 +141,6 @@ export default function Register() {
         <p className="text-xs leading-relaxed" style={{ color: "#92400E" }}>
           Use um e-mail que só você acessa. Evite contas compartilhadas ou que outra pessoa conheça a senha.
         </p>
-      </div>
-
-      <Button
-        variant="outline"
-        className="w-full h-12 text-sm font-medium mb-4"
-        onClick={handleGoogle}
-        type="button"
-      >
-        <GoogleIcon className="w-5 h-5 mr-2" aria-hidden="true" />
-        Continuar com Google
-      </Button>
-
-      <div className="relative mb-5" aria-hidden="true">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-border" />
-        </div>
-        <div className="relative flex justify-center text-xs">
-          <span className="bg-card px-3 text-muted-foreground">— ou cadastre-se com e-mail e senha —</span>
-        </div>
       </div>
 
       {error && (
