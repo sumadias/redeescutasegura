@@ -6,24 +6,22 @@ import QuickExitButton from "@/components/QuickExitButton";
 import { GravuraSol } from "@/components/art/Gravuras";
 
 const CATEGORIAS = [
-  { id: "todos",          label: "Todos",             icon: GraduationCap },
-  { id: "cursos",         label: "Cursos gratuitos",  icon: GraduationCap },
-  { id: "renda",          label: "Renda e trabalho",  icon: Briefcase },
-  { id: "mentorias",      label: "Mentorias",         icon: Users },
-  { id: "direitos",       label: "Direitos",          icon: Scale },
-  { id: "tecnologia",     label: "Tecnologia",        icon: Monitor },
+  { id: "todos",           label: "Todos",            icon: GraduationCap },
+  { id: "cursos",          label: "Cursos",           icon: GraduationCap },
+  { id: "direitos",        label: "Direitos",         icon: Scale },
+  { id: "renda",           label: "Renda e finanças", icon: Briefcase },
   { id: "empreendedorismo",label: "Empreendedorismo", icon: Lightbulb },
 ];
 
+// Cursos reais da Escola Virtual do Governo (gov.br / Enap) — gratuitos e com
+// certificado. Links verificados para escolavirtual.gov.br/curso/<id>.
 const CURSOS = [
-  { id: 1, categoria: "cursos",          titulo: "Curso de Informática Básica",          instituicao: "Fundação Bradesco",                    formato: "Online",             duracao: "40h",     link: "https://www.ev.org.br/cursos/informatica-basica",                                                               gratuito: true,  certificado: true,  publico: "Público geral",                                            obs: "Link externo — abre em nova aba." },
-  { id: 2, categoria: "renda",           titulo: "Qualificação Profissional para Mulheres", instituicao: "SENAI",                             formato: "Presencial / Online", duracao: "Varia",   link: "https://www.senai.br",                                                                                          gratuito: true,  certificado: true,  publico: "Mulheres em vulnerabilidade social",                        obs: "Verifique disponibilidade na sua região." },
-  { id: 3, categoria: "empreendedorismo",titulo: "Empreenda Feminino",                     instituicao: "SEBRAE",                            formato: "Online",             duracao: "20h",     link: "https://www.sebrae.com.br/sites/PortalSebrae/sebraeaz/empreenda-feminino",                                      gratuito: true,  certificado: true,  publico: "Mulheres empreendedoras ou em início de negócio",           obs: "" },
-  { id: 4, categoria: "tecnologia",      titulo: "Programação para Iniciantes",           instituicao: "Fundação Telefônica Vivo",           formato: "Online",             duracao: "30h",     link: "https://www.fundacaotelefonica.org.br/proa",                                                                    gratuito: true,  certificado: true,  publico: "Jovens e adultos",                                         obs: "" },
-  { id: 5, categoria: "direitos",        titulo: "Direitos das Mulheres — Lei Maria da Penha", instituicao: "Gov.br / MDH",                  formato: "Online",             duracao: "8h",      link: "https://www.gov.br/mdh/pt-br/navegue-por-temas/politicas-para-mulheres",                                        gratuito: true,  certificado: false, publico: "Mulheres em situação de violência e profissionais",        obs: "Conteúdo informativo e legal." },
-  { id: 6, categoria: "mentorias",       titulo: "Programa Mentoras Mulheres",             instituicao: "Instituto Rede Mulher Empreendedora",formato: "Online",            duracao: "3 meses", link: "https://redeempreendedoras.com.br",                                                                             gratuito: true,  certificado: false, publico: "Mulheres com negócios em estágio inicial",                 obs: "" },
-  { id: 7, categoria: "cursos",          titulo: "Corte e Costura",                        instituicao: "SENAC",                             formato: "Presencial / Online", duracao: "Varia",   link: "https://www.senac.br",                                                                                          gratuito: false, certificado: true,  publico: "Público geral",                                            obs: "Verifique gratuidade por região e renda." },
-  { id: 8, categoria: "renda",           titulo: "Artesanato como Renda",                  instituicao: "SEBRAE",                            formato: "Online",             duracao: "12h",     link: "https://www.sebrae.com.br",                                                                                     gratuito: true,  certificado: false, publico: "Artesãs e interessadas em renda complementar",             obs: "" },
+  { id: 1, categoria: "direitos",         titulo: "O Protagonismo das Mulheres",              instituicao: "Escola Virtual Gov (Enap)",    formato: "Online",  duracao: "30h", link: "https://www.escolavirtual.gov.br/curso/1189", gratuito: true, certificado: true, publico: "Mulheres e pessoas interessadas na participação das mulheres em espaços de poder", obs: "" },
+  { id: 2, categoria: "cursos",           titulo: "Autoconhecimento e Motivação",             instituicao: "Escola Virtual Gov (Enap)",    formato: "Online",  duracao: "",    link: "https://www.escolavirtual.gov.br/curso/765",  gratuito: true, certificado: true, publico: "Público geral", obs: "" },
+  { id: 3, categoria: "renda",            titulo: "Educação Financeira Pessoal",              instituicao: "Escola Virtual Gov (Enap)",    formato: "Online",  duracao: "",    link: "https://www.escolavirtual.gov.br/curso/1076", gratuito: true, certificado: true, publico: "Público geral", obs: "" },
+  { id: 4, categoria: "renda",            titulo: "Gestão de Finanças Pessoais",              instituicao: "Banco Central · Escola Virtual Gov", formato: "Online", duracao: "", link: "https://www.escolavirtual.gov.br/curso/170",  gratuito: true, certificado: true, publico: "Público geral", obs: "" },
+  { id: 5, categoria: "empreendedorismo", titulo: "Economia criativa, empreendedorismo e inovação", instituicao: "Escola Virtual Gov (Enap)", formato: "Online", duracao: "", link: "https://www.escolavirtual.gov.br/curso/849",  gratuito: true, certificado: true, publico: "Interessadas em empreender e gerar renda", obs: "" },
+  { id: 6, categoria: "cursos",           titulo: "Gestão do Tempo e Produtividade",          instituicao: "Escola Virtual Gov (Enap)",    formato: "Online",  duracao: "",    link: "https://www.escolavirtual.gov.br/curso/468",  gratuito: true, certificado: true, publico: "Público geral", obs: "" },
 ];
 
 export default function TrilhaRecomeco() {
@@ -63,10 +61,19 @@ export default function TrilhaRecomeco() {
       </div>
 
       {/* Aviso */}
-      <div className="mx-4 max-w-md self-center w-full mb-3">
+      <div className="mx-4 max-w-md self-center w-full mb-3 space-y-2">
         <div className="rounded-xl px-4 py-2.5 text-sm border" style={{ background: "#F0FDF4", color: "#166534", borderColor: "#15803D22" }}>
-          Todos os links levam a sites externos de confiança. Nenhum progresso é obrigatório.
+          Cursos gratuitos e com certificado da Escola Virtual do Governo (gov.br). Os links abrem em nova aba.
         </div>
+        <a
+          href="https://www.escolavirtual.gov.br/catalogo"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-2 w-full h-10 rounded-xl text-sm font-semibold border transition-colors"
+          style={{ borderColor: "#15803D", color: "#15803D", background: "#fff" }}
+        >
+          Ver todo o catálogo de cursos <ExternalLink className="w-3.5 h-3.5" />
+        </a>
       </div>
 
       {/* Filtros */}
@@ -121,7 +128,7 @@ export default function TrilhaRecomeco() {
                       <span className="text-xs px-2 py-0.5 rounded-full font-semibold" style={{ background: "#F0FDFA", color: "#0F766E" }}>Certificado</span>
                     )}
                   </div>
-                  <p className="text-xs mt-0.5" style={{ color: "#78716C" }}>{curso.instituicao} · {curso.formato} · {curso.duracao}</p>
+                  <p className="text-xs mt-0.5" style={{ color: "#78716C" }}>{curso.instituicao} · {curso.formato}{curso.duracao ? ` · ${curso.duracao}` : ""}</p>
                 </div>
                 <ChevronRight
                   className="w-4 h-4 flex-shrink-0 transition-transform"

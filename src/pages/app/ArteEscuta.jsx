@@ -12,11 +12,13 @@ const TABS = [
   { id: "galeria", label: "Minha galeria",icon: ImageIcon },
 ];
 
+// Cada item abre uma seleção de vídeos no YouTube (busca), garantindo que o
+// link sempre funcione e mostre conteúdo real e atual sobre o tema.
 const VIDEOS = [
-  { id: 1, title: "Respiração para aterramento emocional", duration: "4 min", url: "https://www.youtube.com/watch?v=aNXKjGFUlMs", desc: "Exercício guiado de respiração diafragmática." },
-  { id: 2, title: "Você tem força",                        duration: "3 min", url: "https://www.youtube.com/watch?v=cjJTH5Bt0kQ", desc: "Mensagem motivadora de acolhimento e reconhecimento." },
-  { id: 3, title: "Técnica 5-4-3-2-1 de aterramento",     duration: "5 min", url: "https://www.youtube.com/watch?v=30VMIEmA114", desc: "Exercício sensorial para momentos de ansiedade." },
-  { id: 4, title: "Autocuidado: pequenos gestos",          duration: "6 min", url: "https://www.youtube.com/watch?v=t1rRo6cgM_E", desc: "Práticas simples de autocuidado para o dia a dia." },
+  { id: 1, title: "Respiração para aterramento emocional", duration: "", url: "https://www.youtube.com/results?search_query=respira%C3%A7%C3%A3o+diafragm%C3%A1tica+guiada+ansiedade", desc: "Exercícios guiados de respiração diafragmática." },
+  { id: 2, title: "Acolhimento e força para seguir",       duration: "", url: "https://www.youtube.com/results?search_query=v%C3%ADdeo+acolhimento+autoestima+for%C3%A7a+mulher", desc: "Mensagens de reconhecimento e motivação." },
+  { id: 3, title: "Técnica 5-4-3-2-1 de aterramento",      duration: "", url: "https://www.youtube.com/results?search_query=t%C3%A9cnica+5+4+3+2+1+aterramento+ansiedade", desc: "Exercício sensorial para momentos de ansiedade." },
+  { id: 4, title: "Autocuidado: pequenos gestos",          duration: "", url: "https://www.youtube.com/results?search_query=autocuidado+pr%C3%A1ticas+di%C3%A1rias+sa%C3%BAde+mental", desc: "Práticas simples de autocuidado para o dia a dia." },
 ];
 
 const AUDIOS = [
@@ -127,7 +129,7 @@ export default function ArteEscuta() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm leading-tight" style={{ color: "#292524" }}>{v.title}</p>
-                    <p className="text-xs mt-0.5 mb-2" style={{ color: "#78716C" }}>{v.desc} · {v.duration}</p>
+                    <p className="text-xs mt-0.5 mb-2" style={{ color: "#78716C" }}>{v.desc}{v.duration ? ` · ${v.duration}` : ""}</p>
                     <a
                       href={v.url}
                       target="_blank"
@@ -140,6 +142,9 @@ export default function ArteEscuta() {
                   </div>
                 </div>
               ))}
+              <p className="text-xs text-center pt-1" style={{ color: "#A8A29E" }}>
+                Ao tocar em "Assistir", abre uma seleção de vídeos no YouTube (nova aba).
+              </p>
             </motion.div>
           )}
 
