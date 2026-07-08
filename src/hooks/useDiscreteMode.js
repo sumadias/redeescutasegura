@@ -15,7 +15,7 @@ const ORIGINAL_TITLE = "Rede Escuta Segura";
 
 // Favicon neutro (calculadora em base64 — ícone genérico SVG)
 const DISCRETE_FAVICON = `data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧮</text></svg>`;
-const ORIGINAL_FAVICON = "/logo.svg";
+const ORIGINAL_FAVICON = "/favicon-32.png";
 
 function setFavicon(href) {
   let link = document.querySelector("link[rel~='icon']");
