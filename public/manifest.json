@@ -1,0 +1,13 @@
+{
+  "name": "Rede Escuta Segura",
+  "short_name": "Escuta Segura",
+  "description": "Proteção, orientação e autonomia para mulheres em situação de violência doméstica e pessoas de todos os gêneros em situação de violência sexual.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAF9",
+  "theme_color": "#0F766E",
+  "icons": [
+    { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
