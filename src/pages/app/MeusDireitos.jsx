@@ -114,7 +114,7 @@ export default function MeusDireitos() {
       <main className="flex-1 px-4 pt-14 pb-10 max-w-md mx-auto w-full space-y-6">
         <div className="pt-4 flex items-center gap-3">
           <button
-            onClick={() => navigate("/app/meu-espaco")}
+            onClick={() => navigate(-1)}
             className="p-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2"
             aria-label="Voltar"
           >

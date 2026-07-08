@@ -72,15 +72,16 @@ const AuthenticatedApp = () => {
       <Route path="/app/mapa" element={<MapaRede />} />
       <Route path="/app/acolhimento" element={<Acolhimento />} />
       <Route path="/app/apoio" element={<ApoioJuridico />} />
+      {/* Conteúdo informativo e serviços — acesso livre, sem login */}
+      <Route path="/app/o-que-e-violencia" element={<OQueEViolencia />} />
+      <Route path="/app/violencia-domestica" element={<ViolenciaDomestica />} />
+      <Route path="/app/direitos" element={<MeusDireitos />} />
       {/* Rotas protegidas — apenas usuários autenticados (qualquer role) */}
       <Route element={<ProtectedRoute unauthenticatedElement={<MeuEspacoGuard />} />}>
         <Route path="/app/meu-espaco" element={<MeuEspaco />} />
         <Route path="/app/calma" element={<MomentoCalma />} />
         <Route path="/app/humor" element={<GraficoHumor />} />
         <Route path="/app/salvos" element={<MeusSalvos />} />
-        <Route path="/app/direitos" element={<MeusDireitos />} />
-        <Route path="/app/o-que-e-violencia" element={<OQueEViolencia />} />
-        <Route path="/app/violencia-domestica" element={<ViolenciaDomestica />} />
         <Route path="/app/arte" element={<ArteEscuta />} />
         <Route path="/app/diario" element={<DiarioEmocoes />} />
         <Route path="/app/trilha" element={FLAGS.ENABLE_TRILHA_RECOMECO ? <TrilhaRecomeco /> : <Navigate to="/app/menu" replace />} />
