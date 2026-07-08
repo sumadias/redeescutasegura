@@ -21,10 +21,12 @@ const VIDEOS = [
   { id: 4, title: "Meditação guiada (mindfulness)",          url: "https://www.youtube.com/watch?v=drzjzYhTam4", fonte: "Yoga para Você",            desc: "15 minutos para relaxar e voltar ao presente." },
 ];
 
+// Áudios de livre acesso no YouTube, dos próprios autores (fonte indicada,
+// em respeito aos direitos autorais). Links verificados via oEmbed.
 const AUDIOS = [
-  { id: 1, title: "Meditação guiada — paz interior",  duration: "8 min",  desc: "Conduz você a um estado de calma e segurança." },
-  { id: 2, title: "Afirmações de acolhimento",        duration: "5 min",  desc: "Frases gentis que reconhecem sua força e trajetória." },
-  { id: 3, title: "Sons da natureza para relaxar",    duration: "15 min", desc: "Chuva, vento e pássaros para ajudar no descanso." },
+  { id: 1, title: "Meditação guiada — paz interior",  url: "https://www.youtube.com/watch?v=r592a5rZb_Y", fonte: "Fernanda Yoga",                desc: "Conduz você a um estado de calma e segurança." },
+  { id: 2, title: "Afirmações de acolhimento",        url: "https://www.youtube.com/watch?v=oKS3CG28G5s", fonte: "Amanda Schultz",               desc: "Frases gentis que reconhecem sua força e trajetória." },
+  { id: 3, title: "Sons da natureza para relaxar",    url: "https://www.youtube.com/watch?v=74nm7vb4HPI", fonte: "A melhor música instrumental", desc: "Som de chuva sem trovão para descansar." },
 ];
 
 export default function ArteEscuta() {
@@ -156,26 +158,25 @@ export default function ArteEscuta() {
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "#F0FDFA" }}>
                     <Headphones className="w-5 h-5" style={{ color: "#0F766E" }} />
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <p className="font-semibold text-sm" style={{ color: "#292524" }}>{a.title}</p>
-                    <p className="text-xs mt-0.5 mb-2" style={{ color: "#78716C" }}>{a.desc} · {a.duration}</p>
-                    <div className="flex items-center gap-2">
-                      <div className="flex-1 h-1.5 rounded-full" style={{ background: "#E7E5E4" }}>
-                        <div className="h-full rounded-full w-0" style={{ background: "#0F766E" }} />
-                      </div>
-                      <button
-                        className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 focus:outline-none focus:ring-2"
-                        style={{ background: "#F0FDFA" }}
-                        aria-label={`Ouvir ${a.title}`}
-                      >
-                        <Play className="w-4 h-4" style={{ color: "#0F766E" }} />
-                      </button>
-                    </div>
+                    <p className="text-xs mt-0.5" style={{ color: "#78716C" }}>{a.desc}</p>
+                    <p className="text-xs mb-2" style={{ color: "#A8A29E" }}>Fonte: {a.fonte}</p>
+                    <a
+                      href={a.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-xl px-3 py-1.5 transition-colors"
+                      style={{ background: "#F0FDFA", color: "#0F766E" }}
+                      aria-label={`Ouvir ${a.title} — abre no YouTube em nova aba`}
+                    >
+                      <Play className="w-3 h-3" /> Ouvir <ExternalLink className="w-3 h-3 opacity-60" />
+                    </a>
                   </div>
                 </div>
               ))}
               <p className="text-xs text-center pt-2" style={{ color: "#A8A29E" }}>
-                Áudios disponíveis em breve. Use fones se precisar de privacidade.
+                Áudios de livre acesso, dos respectivos autores (fonte indicada). Abrem no YouTube. Use fones se precisar de privacidade.
               </p>
             </motion.div>
           )}
