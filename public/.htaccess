@@ -27,3 +27,18 @@
   ExpiresByType application/javascript "access plus 1 year"
   ExpiresByType image/svg+xml "access plus 1 month"
 </IfModule>
+
+# HostGator usa LiteSpeed, que cacheia o HTML por padrão e faz o deploy demorar
+# a aparecer. Desliga o cache de página do LiteSpeed e marca o HTML como
+# no-cache (os assets têm hash no nome, então podem ser cacheados forte).
+<IfModule LiteSpeed>
+  CacheDisable public /
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(js|css|svg|png|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
