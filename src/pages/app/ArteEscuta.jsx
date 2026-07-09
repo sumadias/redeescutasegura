@@ -145,8 +145,8 @@ export default function ArteEscuta() {
                   </div>
                 </div>
               ))}
-              <p className="text-xs text-center pt-1" style={{ color: "#A8A29E" }}>
-                Vídeos de livre acesso, dos respectivos autores (fonte indicada). Abrem no YouTube, em nova aba.
+              <p className="text-xs text-center pt-1 leading-relaxed" style={{ color: "#A8A29E" }}>
+                Vídeos de livre acesso, de autoria dos canais indicados em cada card. A Rede Escuta Segura não hospeda esse conteúdo — os links abrem no YouTube, na página original do autor.
               </p>
             </motion.div>
           )}
@@ -175,8 +175,8 @@ export default function ArteEscuta() {
                   </div>
                 </div>
               ))}
-              <p className="text-xs text-center pt-2" style={{ color: "#A8A29E" }}>
-                Áudios de livre acesso, dos respectivos autores (fonte indicada). Abrem no YouTube. Use fones se precisar de privacidade.
+              <p className="text-xs text-center pt-2 leading-relaxed" style={{ color: "#A8A29E" }}>
+                Áudios de livre acesso, de autoria dos canais indicados em cada card. A Rede Escuta Segura não hospeda esse conteúdo — os links abrem no YouTube, na página original. Use fones se precisar de privacidade.
               </p>
             </motion.div>
           )}
