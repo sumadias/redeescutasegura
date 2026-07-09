@@ -1,40 +1,94 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, Play, Headphones, Pencil, Image as ImageIcon, Trash2, ExternalLink } from "lucide-react";
+import { ArrowLeft, Wind, Sparkles, Pencil, Image as ImageIcon, Trash2, Heart, Phone, Play, Pause } from "lucide-react";
 import QuickExitButton from "@/components/QuickExitButton";
 import { GravuraSol } from "@/components/art/Gravuras";
 
 const TABS = [
-  { id: "videos",  label: "Vídeos",       icon: Play },
-  { id: "audios",  label: "Áudios",       icon: Headphones },
-  { id: "criar",   label: "Criar",        icon: Pencil },
-  { id: "galeria", label: "Minha galeria",icon: ImageIcon },
+  { id: "respirar", label: "Respirar", icon: Wind },
+  { id: "praticas", label: "Práticas", icon: Sparkles },
+  { id: "criar",    label: "Criar",    icon: Pencil },
+  { id: "galeria",  label: "Galeria",  icon: ImageIcon },
 ];
 
-// Vídeos de livre acesso no YouTube, dos próprios autores. A fonte de cada um
-// é exibida em respeito aos direitos autorais. Links verificados via oEmbed.
-const VIDEOS = [
-  { id: 1, title: "Respiração diafragmática para ansiedade", url: "https://www.youtube.com/watch?v=Mu39nw6R0Lk", fonte: "Casule Saúde e Bem-estar", desc: "Exercício guiado para acalmar o corpo e a mente." },
-  { id: 2, title: "Respiração 4-7-8 para acalmar",           url: "https://www.youtube.com/watch?v=PC2gtWs6hsw", fonte: "Libbs",                    desc: "Técnica de respiração que reduz a ansiedade rapidamente." },
-  { id: 3, title: "Técnica 5-4-3-2-1 de aterramento",        url: "https://www.youtube.com/watch?v=vgxwvDEBW8o", fonte: "Psicólogo Victor",          desc: "Exercício sensorial para momentos de crise de ansiedade." },
-  { id: 4, title: "Meditação guiada (mindfulness)",          url: "https://www.youtube.com/watch?v=drzjzYhTam4", fonte: "Yoga para Você",            desc: "15 minutos para relaxar e voltar ao presente." },
+// Ciclo de respiração (segundos). Conteúdo próprio do app.
+const FASES = [
+  { nome: "Inspire pelo nariz", dur: 4 },
+  { nome: "Segure com gentileza", dur: 4 },
+  { nome: "Solte o ar devagar", dur: 6 },
 ];
 
-// Áudios de livre acesso no YouTube, dos próprios autores (fonte indicada,
-// em respeito aos direitos autorais). Links verificados via oEmbed.
-const AUDIOS = [
-  { id: 1, title: "Meditação guiada — paz interior",  url: "https://www.youtube.com/watch?v=r592a5rZb_Y", fonte: "Fernanda Yoga",                desc: "Conduz você a um estado de calma e segurança." },
-  { id: 2, title: "Afirmações de acolhimento",        url: "https://www.youtube.com/watch?v=oKS3CG28G5s", fonte: "Amanda Schultz",               desc: "Frases gentis que reconhecem sua força e trajetória." },
-  { id: 3, title: "Sons da natureza para relaxar",    url: "https://www.youtube.com/watch?v=74nm7vb4HPI", fonte: "A melhor música instrumental", desc: "Som de chuva sem trovão para descansar." },
+// Técnica 5-4-3-2-1 de aterramento — texto próprio, em linguagem simples.
+const ATERRAMENTO = [
+  { n: 5, texto: "coisas que você pode VER ao seu redor" },
+  { n: 4, texto: "coisas que você pode TOCAR" },
+  { n: 3, texto: "sons que você pode OUVIR" },
+  { n: 2, texto: "cheiros que você pode SENTIR" },
+  { n: 1, texto: "coisa boa em você mesma" },
 ];
+
+// Afirmações de acolhimento — texto próprio da Rede Escuta Segura.
+const AFIRMACOES = [
+  "O que eu sinto é válido.",
+  "Eu mereço cuidado e respeito.",
+  "Um passo de cada vez já é coragem.",
+  "Minha segurança vem em primeiro lugar.",
+  "Eu posso pedir ajuda quando precisar.",
+  "Eu não estou sozinha.",
+];
+
+function Respiracao() {
+  const [ativo, setAtivo] = useState(false);
+  const [fase, setFase] = useState(0);
+
+  useEffect(() => {
+    if (!ativo) return;
+    const t = setTimeout(() => setFase(f => (f + 1) % FASES.length), FASES[fase].dur * 1000);
+    return () => clearTimeout(t);
+  }, [ativo, fase]);
+
+  const alvo = !ativo ? 0.7 : (fase === 2 ? 0.6 : 1);
+  const dur = !ativo ? 0.8 : FASES[fase].dur;
+
+  return (
+    <div className="flex flex-col items-center text-center py-4">
+      <div className="relative flex items-center justify-center" style={{ width: 240, height: 240 }}>
+        <motion.div
+          animate={{ scale: alvo }}
+          transition={{ duration: dur, ease: "easeInOut" }}
+          className="rounded-full flex items-center justify-center"
+          style={{ width: 200, height: 200, background: "#FEF5EF", border: "2px solid #9A341233" }}
+        >
+          <span className="text-base font-semibold px-4" style={{ color: "#9A3412" }}>
+            {ativo ? FASES[fase].nome : "Pronta?"}
+          </span>
+        </motion.div>
+      </div>
+
+      <button
+        onClick={() => { setFase(0); setAtivo(a => !a); }}
+        className="mt-6 inline-flex items-center gap-2 h-12 px-6 rounded-xl text-sm font-semibold text-white transition-colors focus:outline-none focus:ring-2"
+        style={{ background: "#9A3412" }}
+      >
+        {ativo ? <><Pause className="w-4 h-4" /> Pausar</> : <><Play className="w-4 h-4" /> Começar a respirar</>}
+      </button>
+
+      <p className="text-sm mt-4 max-w-xs leading-relaxed" style={{ color: "#78716C" }}>
+        Acompanhe o círculo: quando cresce, inspire; quando diminui, solte o ar.
+        Repita quantas vezes quiser. Não há pressa.
+      </p>
+    </div>
+  );
+}
 
 export default function ArteEscuta() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("videos");
+  const [activeTab, setActiveTab] = useState("respirar");
   const [galeria, setGaleria] = useState([]);
   const [textoLivre, setTextoLivre] = useState("");
   const [salvouTexto, setSalvouTexto] = useState(false);
+  const [afirmacao, setAfirmacao] = useState(0);
   const fileRef = useRef();
 
   function salvarTexto() {
@@ -93,7 +147,7 @@ export default function ArteEscuta() {
       {/* Aviso */}
       <div className="mx-4 max-w-md self-center w-full mb-3">
         <div className="rounded-xl px-4 py-2.5 text-sm border" style={{ background: "#FEF3C7", color: "#92400E", borderColor: "#92400E22" }}>
-          Todo conteúdo aqui foi selecionado com cuidado. Você pode sair a qualquer momento.
+          Conteúdo próprio, pensado com cuidado para você. Você pode sair a qualquer momento.
         </div>
       </div>
 
@@ -122,62 +176,65 @@ export default function ArteEscuta() {
       {/* Conteúdo */}
       <div className="flex-1 px-4 pb-10 max-w-md mx-auto w-full">
         <AnimatePresence mode="wait">
-          {activeTab === "videos" && (
-            <motion.div key="videos" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-3">
-              {VIDEOS.map(v => (
-                <div key={v.id} className="rounded-xl border p-4 flex gap-3 bg-white" style={{ borderColor: "#E7E5E4" }}>
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "#FEF5EF" }}>
-                    <GravuraSol size={28} color="#9A3412" opacity={0.8} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-sm leading-tight" style={{ color: "#292524" }}>{v.title}</p>
-                    <p className="text-xs mt-0.5" style={{ color: "#78716C" }}>{v.desc}</p>
-                    <p className="text-xs mb-2" style={{ color: "#A8A29E" }}>Fonte: {v.fonte}</p>
-                    <a
-                      href={v.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-xl px-3 py-1.5 transition-colors"
-                      style={{ background: "#FEF5EF", color: "#9A3412" }}
-                    >
-                      <Play className="w-3 h-3" /> Assistir <ExternalLink className="w-3 h-3 opacity-60" />
-                    </a>
-                  </div>
-                </div>
-              ))}
-              <p className="text-xs text-center pt-1 leading-relaxed" style={{ color: "#A8A29E" }}>
-                Vídeos de livre acesso, de autoria dos canais indicados em cada card. A Rede Escuta Segura não hospeda esse conteúdo — os links abrem no YouTube, na página original do autor.
-              </p>
+          {activeTab === "respirar" && (
+            <motion.div key="respirar" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+              <div className="rounded-xl border p-4 bg-white" style={{ borderColor: "#E7E5E4" }}>
+                <p className="font-semibold text-sm mb-1" style={{ color: "#292524" }}>Respiração guiada</p>
+                <p className="text-sm mb-2" style={{ color: "#78716C" }}>Um exercício simples para acalmar o corpo em momentos difíceis.</p>
+                <Respiracao />
+              </div>
             </motion.div>
           )}
 
-          {activeTab === "audios" && (
-            <motion.div key="audios" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-3">
-              {AUDIOS.map(a => (
-                <div key={a.id} className="rounded-xl border p-4 flex gap-3 bg-white" style={{ borderColor: "#E7E5E4" }}>
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "#F0FDFA" }}>
-                    <Headphones className="w-5 h-5" style={{ color: "#0F766E" }} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-sm" style={{ color: "#292524" }}>{a.title}</p>
-                    <p className="text-xs mt-0.5" style={{ color: "#78716C" }}>{a.desc}</p>
-                    <p className="text-xs mb-2" style={{ color: "#A8A29E" }}>Fonte: {a.fonte}</p>
-                    <a
-                      href={a.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold rounded-xl px-3 py-1.5 transition-colors"
-                      style={{ background: "#F0FDFA", color: "#0F766E" }}
-                      aria-label={`Ouvir ${a.title} — abre no YouTube em nova aba`}
-                    >
-                      <Play className="w-3 h-3" /> Ouvir <ExternalLink className="w-3 h-3 opacity-60" />
-                    </a>
-                  </div>
+          {activeTab === "praticas" && (
+            <motion.div key="praticas" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-4">
+              {/* Aterramento 5-4-3-2-1 */}
+              <div className="rounded-xl border p-4 bg-white" style={{ borderColor: "#E7E5E4" }}>
+                <p className="font-semibold text-sm" style={{ color: "#292524" }}>Aterramento 5-4-3-2-1</p>
+                <p className="text-sm mt-0.5 mb-3" style={{ color: "#78716C" }}>
+                  Quando a ansiedade apertar, volte ao presente notando, com calma:
+                </p>
+                <ul className="space-y-2">
+                  {ATERRAMENTO.map(item => (
+                    <li key={item.n} className="flex items-center gap-3">
+                      <span className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm font-semibold" style={{ background: "#FEF5EF", color: "#9A3412" }}>
+                        {item.n}
+                      </span>
+                      <span className="text-sm" style={{ color: "#292524" }}>{item.texto}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Afirmações */}
+              <div className="rounded-xl border p-5 text-center" style={{ borderColor: "#0F766E22", background: "#F0FDFA" }}>
+                <Heart className="w-5 h-5 mx-auto mb-2" style={{ color: "#0F766E" }} aria-hidden="true" />
+                <p className="text-base font-semibold leading-relaxed" style={{ color: "#115E59", fontFamily: "var(--font-lora)" }}>
+                  "{AFIRMACOES[afirmacao]}"
+                </p>
+                <button
+                  onClick={() => setAfirmacao(a => (a + 1) % AFIRMACOES.length)}
+                  className="mt-3 text-xs font-semibold underline underline-offset-2 focus:outline-none focus:ring-2 rounded"
+                  style={{ color: "#0F766E" }}
+                >
+                  Próxima afirmação
+                </button>
+              </div>
+
+              {/* Apoio oficial e gratuito */}
+              <div className="rounded-xl border p-4 bg-white" style={{ borderColor: "#E7E5E4" }}>
+                <p className="font-semibold text-sm mb-2" style={{ color: "#292524" }}>Precisa conversar agora?</p>
+                <div className="space-y-2">
+                  <a href="tel:188" className="flex items-center gap-3 rounded-xl px-3 py-2.5 border transition-colors" style={{ borderColor: "#0F766E22", background: "#F0FDFA" }}>
+                    <Phone className="w-4 h-4 flex-shrink-0" style={{ color: "#0F766E" }} />
+                    <span className="text-sm" style={{ color: "#115E59" }}><strong>CVV — 188</strong> · apoio emocional 24h, gratuito e sigiloso</span>
+                  </a>
+                  <a href="tel:180" className="flex items-center gap-3 rounded-xl px-3 py-2.5 border transition-colors" style={{ borderColor: "#9F123922", background: "#FFF1F2" }}>
+                    <Phone className="w-4 h-4 flex-shrink-0" style={{ color: "#9F1239" }} />
+                    <span className="text-sm" style={{ color: "#9F1239" }}><strong>Ligue 180</strong> · Central de Atendimento à Mulher, 24h e gratuita</span>
+                  </a>
                 </div>
-              ))}
-              <p className="text-xs text-center pt-2 leading-relaxed" style={{ color: "#A8A29E" }}>
-                Áudios de livre acesso, de autoria dos canais indicados em cada card. A Rede Escuta Segura não hospeda esse conteúdo — os links abrem no YouTube, na página original. Use fones se precisar de privacidade.
-              </p>
+              </div>
             </motion.div>
           )}
 
