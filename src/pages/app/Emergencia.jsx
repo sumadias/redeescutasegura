@@ -11,12 +11,19 @@ export default function Emergencia() {
     <div className="min-h-screen flex flex-col" style={{ background: "#FAFAFB" }}>
       <QuickExitButton />
 
-      {/* Topo institucional */}
+      {/* Topo institucional.
+          O botão "Sair rapidamente" é fixo (top-3 right-3, ~150px de largura) e
+          flutua acima de tudo com z-50 — ele não participa do layout, então é o
+          cabeçalho que precisa abrir espaço, senão ele cobre justamente o botão
+          de ligar. Em tela de 375px não cabem logo + botão + essa faixa na mesma
+          linha, então no celular o CTA desce para uma segunda linha, em largura
+          total. Além de resolver a colisão, fica um alvo de toque bem maior. */}
       <div className="bg-white border-b sticky top-0 z-20" style={{ borderColor: "#E5E7EB" }}>
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+        <div className="max-w-5xl mx-auto px-4 py-2.5 md:py-0 md:h-16 md:pr-[164px]
+                        flex flex-col md:flex-row md:items-center md:justify-between gap-2.5">
           <button
             onClick={() => (window.history.length > 1 ? navigate(-1) : navigate("/"))}
-            className="flex items-center gap-2.5 min-w-0"
+            className="flex items-center gap-2.5 min-w-0 self-start pr-[160px] md:pr-0"
             aria-label="Voltar"
           >
             <svg viewBox="0 0 512 512" className="w-9 h-9 flex-shrink-0" aria-hidden="true">
@@ -39,8 +46,10 @@ export default function Emergencia() {
           </button>
           <a
             href="tel:180"
-            className="h-10 px-4 rounded-full text-sm font-semibold text-white inline-flex items-center gap-2 flex-shrink-0"
+            className="h-11 md:h-10 w-full md:w-auto px-4 rounded-full text-sm font-semibold text-white
+                       inline-flex items-center justify-center gap-2 flex-shrink-0"
             style={{ background: "#E8235C" }}
+            aria-label="Ligar para o 180 — Central de Atendimento à Mulher"
           >
             <Phone className="w-4 h-4" aria-hidden="true" /> Preciso de ajuda agora
           </a>
@@ -48,12 +57,21 @@ export default function Emergencia() {
       </div>
 
       {/* HERO */}
-      <div className="relative overflow-hidden" style={{ background: "linear-gradient(115deg,#150E38 0%,#1E1450 45%,#2A1A63 100%)" }}>
-        {/* silhueta da Paraíba: à direita no desktop, atrás do texto no mobile */}
-        <MapaPBNeon className="absolute pointer-events-none opacity-25 md:opacity-100 w-[120%] md:w-[49%] right-[-18%] md:right-[-1%] top-1/2 -translate-y-1/2" />
+      <div
+        className="relative overflow-hidden min-h-[320px] md:min-h-[380px] flex items-center"
+        style={{ background: "linear-gradient(115deg,#150E38 0%,#1E1450 45%,#2A1A63 100%)" }}
+      >
+        <div className="max-w-5xl mx-auto px-4 py-12 md:py-16 relative w-full
+                        md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,47%)] md:items-center md:gap-6">
+          {/* No celular a silhueta é fundo (absoluta, bem apagada, atrás do
+              texto). No desktop ela é COLUNA DA GRADE, não elemento absoluto:
+              posicionamento absoluto fazia o mapa passar por baixo do texto em
+              certas larguras, porque a caixa dele não participava do layout.
+              Como coluna, os dois nunca se encostam, em largura nenhuma. */}
+          <MapaPBNeon className="absolute inset-y-0 right-[-26%] h-full w-auto max-w-none opacity-20 pointer-events-none
+                                 md:static md:opacity-100 md:h-auto md:w-full md:col-start-2 md:row-start-1" />
 
-        <div className="max-w-5xl mx-auto px-4 py-12 md:py-16 relative">
-          <div className="md:max-w-[49%]">
+          <div className="relative md:col-start-1 md:row-start-1">
             <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Emergência</h1>
             <p className="text-lg md:text-xl font-bold mt-2" style={{ color: "#FF4D8D" }}>
               Você não está sozinha. Estamos aqui por você.

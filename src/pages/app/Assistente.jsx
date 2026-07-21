@@ -162,8 +162,10 @@ export default function Assistente() {
 
       {/* topo */}
       <div className="relative overflow-hidden shrink-0" style={{ background: "linear-gradient(115deg,#150E38 0%,#1E1450 45%,#2A1A63 100%)" }}>
-        <MapaPBNeon className="absolute pointer-events-none opacity-45 w-[70%] right-[-16%] top-1/2 -translate-y-1/2" />
-        <div className="max-w-2xl mx-auto px-4 py-4 relative flex items-center gap-3">
+        {/* dimensionada pela altura da faixa, como no hero da Emergência */}
+        <MapaPBNeon className="absolute pointer-events-none opacity-40 h-[190%] w-auto max-w-none right-[-8%] top-1/2 -translate-y-1/2" />
+        {/* pr reserva a faixa do botão fixo "Sair rapidamente" (z-50) */}
+        <div className="max-w-2xl mx-auto pl-2 pr-[160px] py-4 relative flex items-center gap-3">
           <button onClick={() => (window.history.length > 1 ? navigate(-1) : navigate("/emergencia"))}
             className="p-1.5 rounded-lg text-white/80 hover:text-white" aria-label="Voltar">
             <ArrowLeft className="w-5 h-5" />
