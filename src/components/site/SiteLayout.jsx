@@ -1,5 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 import QuickExitButton from "@/components/QuickExitButton";
 import SiteHeader from "./SiteHeader";
 import SiteFooter from "./SiteFooter";
@@ -8,13 +7,10 @@ import { T } from "./tokens";
 /* Casca do site institucional: cabeçalho, rodapé e o botão de saída rápida.
    A /emergencia NÃO usa este layout — ela tem cabeçalho próprio e ficou
    intocada, conforme combinado. */
+/* A rolagem ao trocar de rota é tratada globalmente em <RolagemDeRota />,
+   dentro do Router — aqui ela cobriria só as páginas institucionais, e o
+   problema aparecia justamente ao ir para /emergencia e /assistente. */
 export default function SiteLayout() {
-  const { pathname } = useLocation();
-
-  /* trocar de página deve levar ao topo; sem isso o React Router mantém a
-     rolagem e a página nova abre no meio */
-  useEffect(() => window.scrollTo(0, 0), [pathname]);
-
   return (
     <div className="min-h-screen flex flex-col" style={{ background: T.pagina }}>
       <QuickExitButton />

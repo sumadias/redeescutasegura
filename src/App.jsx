@@ -36,6 +36,7 @@ import Agenda from './pages/painel/Agenda';
 import ChatUsuaria from './pages/app/ChatUsuaria';
 import Assistente from './pages/app/Assistente';
 import SiteLayout from './components/site/SiteLayout';
+import RolagemDeRota from './components/RolagemDeRota';
 import SobreARede from './pages/site/SobreARede';
 import NossosProjetos from './pages/site/NossosProjetos';
 import Noticias from './pages/site/Noticias';
@@ -61,6 +62,9 @@ import AdminConfig from './pages/admin/AdminConfig';
 
 const AuthenticatedApp = () => {
   return (
+    <>
+    {/* toda troca de rota comeca no topo; voltar devolve onde a pessoa estava */}
+    <RolagemDeRota />
     <Routes>
       {/* Auth routes */}
       <Route path="/login" element={<Login />} />
@@ -133,6 +137,7 @@ const AuthenticatedApp = () => {
 
       <Route path="*" element={<PageNotFound />} />
     </Routes>
+    </>
   );
 };
 
