@@ -31,6 +31,8 @@ export const NAV = [
   { rotulo: "Nossos Projetos", href: "/projetos" },
   { rotulo: "Emergência", href: "/emergencia" },
   { rotulo: "Notícias", href: "/noticias" },
+  { rotulo: "Meu Espaço", href: "/app/meu-espaco" },
+  { rotulo: "Jogos Educativos", href: "/jogos" },
 ];
 
 /* Telefones públicos, os mesmos verificados que alimentam a /emergencia */

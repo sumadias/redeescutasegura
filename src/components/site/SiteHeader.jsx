@@ -28,13 +28,17 @@ export default function SiteHeader() {
       className="bg-white border-b sticky top-0 z-30"
       style={{ borderColor: T.borda }}
     >
-      <div className="max-w-6xl mx-auto px-4 lg:pr-[168px]">
-        <div className="h-[68px] flex items-center gap-6">
+      <div className="max-w-6xl mx-auto px-4 xl:pr-[168px]">
+        <div className="h-[68px] flex items-center gap-4">
+          {/* Com seis itens de menu, o nome escrito ao lado da marca só cabe em
+              telas bem largas. Abaixo disso fica só o símbolo, que já identifica
+              a marca e devolve ~90px para a navegação. */}
           <Link to="/" aria-label="Rede Escuta Segura — início" className="flex-shrink-0">
-            <LogoRES tamanho={38} id="hdr" />
+            <span className="hidden 2xl:inline-flex"><LogoRES tamanho={38} id="hdr" /></span>
+            <span className="2xl:hidden"><LogoRES tamanho={38} semTexto id="hdrc" /></span>
           </Link>
 
-          <nav aria-label="Navegação principal" className="hidden lg:flex items-center gap-7 ml-4">
+          <nav aria-label="Navegação principal" className="hidden xl:flex items-center gap-5 ml-2">
             {NAV.map((i) => (
               <NavLink
                 key={i.href}
@@ -53,18 +57,20 @@ export default function SiteHeader() {
 
           <a
             href="tel:180"
-            className="hidden lg:inline-flex ml-auto h-10 px-5 rounded-lg text-sm font-semibold text-white items-center gap-2 flex-shrink-0"
+            className="hidden xl:inline-flex ml-auto h-10 px-4 rounded-lg text-sm font-semibold text-white items-center gap-2 flex-shrink-0"
             style={{ background: T.roxo }}
             aria-label="Ligar para o 180 — Central de Atendimento à Mulher"
           >
-            Preciso de ajuda agora
+            <span className="hidden 2xl:inline">Preciso de ajuda agora</span>
+            <span className="2xl:hidden">Ajuda agora</span>
           </a>
 
-          {/* mobile: só o gatilho da gaveta; fica à esquerda da faixa do
-              "Sair rapidamente" para os dois não se encostarem */}
+          {/* Abaixo de xl a navegação vira gaveta: seis itens mais o CTA e a
+              faixa do "Sair rapidamente" não cabem em uma linha só.
+              O gatilho fica à esquerda dessa faixa para não se encostarem. */}
           <button
             onClick={() => setAberto((v) => !v)}
-            className="lg:hidden ml-auto mr-[152px] w-10 h-10 rounded-lg inline-flex items-center justify-center"
+            className="xl:hidden ml-auto mr-[152px] w-10 h-10 rounded-lg inline-flex items-center justify-center"
             style={{ color: T.roxo, background: T.roxoSuave }}
             aria-expanded={aberto}
             aria-controls="menu-site"
@@ -77,7 +83,7 @@ export default function SiteHeader() {
 
       {/* gaveta mobile */}
       {aberto && (
-        <div id="menu-site" className="lg:hidden border-t" style={{ borderColor: T.borda }}>
+        <div id="menu-site" className="xl:hidden border-t" style={{ borderColor: T.borda }}>
           <nav aria-label="Navegação principal" className="px-4 py-3 flex flex-col">
             {NAV.map((i) => (
               <NavLink
