@@ -34,6 +34,7 @@ import Servicos from './pages/painel/Servicos';
 import ChatPainel from './pages/painel/ChatPainel';
 import Agenda from './pages/painel/Agenda';
 import ChatUsuaria from './pages/app/ChatUsuaria';
+import Assistente from './pages/app/Assistente';
 import Agendamento from './pages/app/Agendamento';
 import PlanoSeguranca from './pages/app/PlanoSeguranca';
 import CartasParaMim from './pages/app/CartasParaMim';
@@ -69,6 +70,9 @@ const AuthenticatedApp = () => {
       <Route path="/app/menu" element={<AppMenu />} />
       <Route path="/app/emergencia" element={<Emergencia />} />
       <Route path="/emergencia" element={<Emergencia />} />
+      {/* Assistente automático — público, sem login e sem gravar conversa */}
+      <Route path="/assistente" element={<Assistente />} />
+      <Route path="/app/assistente" element={<Assistente />} />
       <Route path="/app/mapa" element={<MapaRede />} />
       <Route path="/app/acolhimento" element={<Acolhimento />} />
       <Route path="/app/apoio" element={<ApoioJuridico />} />

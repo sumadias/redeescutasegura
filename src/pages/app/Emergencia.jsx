@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { Phone, Shield } from "lucide-react";
+import { Phone, Shield, MessageCircle } from "lucide-react";
 import QuickExitButton from "@/components/QuickExitButton";
 import RedeMunicipios from "@/components/RedeMunicipios";
+import MapaPBNeon from "@/components/MapaPBNeon";
 
 export default function Emergencia() {
   const navigate = useNavigate();
@@ -47,25 +48,29 @@ export default function Emergencia() {
       </div>
 
       {/* HERO */}
-      <div className="relative overflow-hidden" style={{ background: "linear-gradient(135deg,#1A1145 0%,#251657 55%,#2E1B6B 100%)" }}>
-        <div
-          className="absolute pointer-events-none"
-          aria-hidden="true"
-          style={{
-            right: -70, top: "50%", transform: "translateY(-50%)",
-            width: 340, height: 340, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(255,45,120,0.38), transparent 68%)",
-          }}
-        />
-        <div className="max-w-5xl mx-auto px-4 py-10 md:py-14 relative">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white">Emergência</h1>
-          <p className="text-lg md:text-xl font-bold mt-2" style={{ color: "#FF4D8D" }}>
-            Você não está sozinha. Estamos aqui por você.
-          </p>
-          <p className="text-sm md:text-base mt-4 max-w-xl leading-relaxed" style={{ color: "#C9C2E8" }}>
-            Encontre serviços de apoio e atendimento em todo o estado da Paraíba.
-            Filtre por cidade para te ajudar a encontrar ajuda perto de você.
-          </p>
+      <div className="relative overflow-hidden" style={{ background: "linear-gradient(115deg,#150E38 0%,#1E1450 45%,#2A1A63 100%)" }}>
+        {/* silhueta da Paraíba: à direita no desktop, atrás do texto no mobile */}
+        <MapaPBNeon className="absolute pointer-events-none opacity-25 md:opacity-100 w-[120%] md:w-[49%] right-[-18%] md:right-[-1%] top-1/2 -translate-y-1/2" />
+
+        <div className="max-w-5xl mx-auto px-4 py-12 md:py-16 relative">
+          <div className="md:max-w-[49%]">
+            <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Emergência</h1>
+            <p className="text-lg md:text-xl font-bold mt-2" style={{ color: "#FF4D8D" }}>
+              Você não está sozinha. Estamos aqui por você.
+            </p>
+            <p className="text-sm md:text-base mt-4 leading-relaxed" style={{ color: "#C9C2E8" }}>
+              Encontre serviços de apoio e atendimento em todo o estado da Paraíba.
+              Filtre por cidade ou pergunte ao assistente para achar ajuda perto de você.
+            </p>
+            <button
+              onClick={() => navigate("/assistente")}
+              className="mt-6 h-12 px-6 rounded-full text-sm font-bold text-white inline-flex items-center gap-2 shadow-lg"
+              style={{ background: "#E8235C", boxShadow: "0 8px 28px rgba(232,35,92,0.45)" }}
+            >
+              <MessageCircle className="w-4 h-4" aria-hidden="true" />
+              Perguntar ao assistente
+            </button>
+          </div>
         </div>
       </div>
 

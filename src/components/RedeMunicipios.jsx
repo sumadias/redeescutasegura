@@ -482,7 +482,7 @@ export default function RedeMunicipios() {
               style={{ borderColor: C.purple + "66", color: C.purple, background: C.card }}>
               <Phone className="w-4 h-4" aria-hidden="true" /> Ligar para 180
             </a>
-            <button onClick={() => navigate("/app/chat")}
+            <button onClick={() => navigate("/assistente")}
               className="h-11 px-5 rounded-lg text-sm font-semibold text-white inline-flex items-center gap-2"
               style={{ background: C.purple }}>
               <MessageCircle className="w-4 h-4" aria-hidden="true" /> Chatbot
