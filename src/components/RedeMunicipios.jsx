@@ -11,6 +11,7 @@ import {
   ORIENTACAO_ZONA_RURAL, DATA_VERIFICACAO,
 } from "@/data/redePB";
 import { SERVICOS_LOCAIS, FONTE_SAUDE } from "@/data/redeSaudePB";
+import { SERVICOS_ESPECIALIZADOS } from "@/data/redeEspecializadaPB";
 
 /* Tipos que são SEMPRE sigilosos, independentemente do que estiver cadastrado.
    Abrigo de mulheres em situação de violência nunca pode ter endereço público. */
@@ -254,9 +255,12 @@ export default function RedeMunicipios() {
      municipais (evita misturar cidades). */
   const locais = useMemo(() => {
     if (!municipio) return [];
+    /* rede especializada (DEAM/Defensoria/CREAS) vem primeiro: é o serviço
+       que a pessoa em situação de violência precisa encontrar antes de tudo */
+    const especializados = SERVICOS_ESPECIALIZADOS[ibge] || [];
     const daPlanilha = SERVICOS_LOCAIS[ibge] || [];
     const doCadastro = cadastrados.filter((s) => s.cidadeIbge === ibge);
-    return [...daPlanilha, ...doCadastro];
+    return [...especializados, ...daPlanilha, ...doCadastro];
   }, [municipio, ibge, cadastrados]);
 
   /* A cidade tem algum serviço ESPECIALIZADO em violência contra a mulher?
@@ -487,7 +491,9 @@ export default function RedeMunicipios() {
         </section>
 
         <p className="text-xs text-center pb-2" style={{ color: "#9CA3AF" }}>
-          Informações verificadas em fontes oficiais (gov.br, IBGE). Última atualização: {DATA_VERIFICACAO}.
+          Informações verificadas em fontes oficiais: Ministério da Saúde (CNES), IBGE e
+          Senado Federal — Observatório da Mulher contra a Violência.
+          Última atualização: {DATA_VERIFICACAO}.
         </p>
       </div>
     </div>
