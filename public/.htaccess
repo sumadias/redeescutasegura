@@ -38,7 +38,20 @@
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
-  <FilesMatch "\.(js|css|svg|png|ico|woff2?)$">
+
+  # Só os arquivos de /assets/ têm hash no nome — esses podem ser imutáveis.
+  <FilesMatch "^index-[A-Za-z0-9_-]+\.(js|css)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(svg|png|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+
+  # sw.js e manifest.json NÃO têm hash. Estavam caindo na regra de 1 ano como
+  # "immutable", o que congelava o service worker no navegador de quem já tinha
+  # visitado o site: ele nunca era rebaixado, nunca reinstalava, e o cache dele
+  # continuava servindo a versão antiga do app depois de cada deploy.
+  <FilesMatch "^(sw\.js|manifest\.json)$">
+    Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
 </IfModule>

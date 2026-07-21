@@ -30,6 +30,14 @@ jobs:
           VITE_BASE44_APP_ID: 6a0cbe38006b2f3439037e1d
           VITE_BASE44_APP_BASE_URL: https://omniscient-escuta-segura-rede.base44.app
 
+      - name: Versionar o service worker com o SHA do commit
+        # sw.js nao tem hash no nome. Sem isso ele fica byte-identico entre
+        # deploys, o navegador nunca reinstala o worker e o cache antigo do app
+        # nunca e limpado.
+        run: |
+          sed -i "s/__BUILD__/${GITHUB_SHA::12}/" dist/sw.js
+          grep -n "const VERSAO" dist/sw.js
+
       - name: Publicar build na branch deploy
         run: |
           cp scripts/server-deploy.sh dist/
