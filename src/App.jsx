@@ -35,6 +35,10 @@ import ChatPainel from './pages/painel/ChatPainel';
 import Agenda from './pages/painel/Agenda';
 import ChatUsuaria from './pages/app/ChatUsuaria';
 import Assistente from './pages/app/Assistente';
+import SiteLayout from './components/site/SiteLayout';
+import SobreARede from './pages/site/SobreARede';
+import NossosProjetos from './pages/site/NossosProjetos';
+import Noticias from './pages/site/Noticias';
 import Agendamento from './pages/app/Agendamento';
 import PlanoSeguranca from './pages/app/PlanoSeguranca';
 import CartasParaMim from './pages/app/CartasParaMim';
@@ -64,8 +68,16 @@ const AuthenticatedApp = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
 
+      {/* Site institucional — cabecalho e rodape compartilhados, sem login.
+          A /emergencia fica FORA deste layout: ela tem cabecalho proprio. */}
+      <Route element={<SiteLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/sobre" element={<SobreARede />} />
+        <Route path="/projetos" element={<NossosProjetos />} />
+        <Route path="/noticias" element={<Noticias />} />
+      </Route>
+
       {/* Rotas públicas — sem login */}
-      <Route path="/" element={<Home />} />
       <Route path="/app" element={<Navigate to="/app/menu" replace />} />
       <Route path="/app/menu" element={<AppMenu />} />
       <Route path="/app/emergencia" element={<Emergencia />} />
