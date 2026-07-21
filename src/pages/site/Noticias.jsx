@@ -1,9 +1,14 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Newspaper, ArrowRight, ExternalLink } from "lucide-react";
+import { Newspaper, ArrowRight, ExternalLink, Info } from "lucide-react";
 import { T } from "@/components/site/tokens";
 import { Secao, Cartao, FaixaAjuda } from "@/components/site/ui";
-import { NOTICIAS } from "@/data/noticias";
+
+/* As notícias vêm de public/noticias.json, gerado no build por
+   scripts/coletar-noticias.mjs a partir de fontes oficiais. Buscamos em tempo
+   de execução, do próprio domínio — sem CORS e sem servidor.
+   Publicamos título, fonte, data e link: o texto da matéria fica com quem
+   escreveu, e quem quiser ler vai lá. */
 
 function formatarData(iso) {
   const d = new Date(`${iso}T12:00:00`);
@@ -12,22 +17,31 @@ function formatarData(iso) {
 }
 
 export default function Noticias() {
-  const [cat, setCat] = useState("Todas");
+  const [dados, setDados] = useState(null);
+  const [erro, setErro] = useState(false);
+  const [escopo, setEscopo] = useState("Todas");
 
-  const ordenadas = useMemo(
-    () => [...NOTICIAS].sort((a, b) => String(b.data).localeCompare(String(a.data))),
-    []
-  );
-  /* filtros montados a partir do que existe, não de uma lista fixa */
-  const categorias = useMemo(() => {
-    const c = [];
-    ordenadas.forEach((n) => n.categoria && !c.includes(n.categoria) && c.push(n.categoria));
-    return ["Todas", ...c];
-  }, [ordenadas]);
+  useEffect(() => {
+    let vivo = true;
+    fetch("/noticias.json", { cache: "no-cache" })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((d) => vivo && setDados(d))
+      .catch(() => vivo && setErro(true));
+    return () => { vivo = false; };
+  }, []);
+
+  const noticias = dados?.noticias || [];
+  const escopos = useMemo(() => {
+    const e = [];
+    noticias.forEach((n) => n.escopo && !e.includes(n.escopo) && e.push(n.escopo));
+    return e.length > 1 ? ["Todas", ...e] : [];
+  }, [noticias]);
   const lista = useMemo(
-    () => (cat === "Todas" ? ordenadas : ordenadas.filter((n) => n.categoria === cat)),
-    [cat, ordenadas]
+    () => (escopo === "Todas" ? noticias : noticias.filter((n) => n.escopo === escopo)),
+    [escopo, noticias]
   );
+
+  const carregando = !dados && !erro;
 
   return (
     <>
@@ -38,88 +52,111 @@ export default function Noticias() {
             Notícias
           </h1>
           <p className="text-sm md:text-lg mt-4 leading-relaxed max-w-2xl" style={{ color: "#E4DBFB" }}>
-            Fique por dentro das ações, campanhas e informações importantes sobre a rede de
-            proteção na Paraíba.
+            Leis, decretos e avanços para as mulheres, no Brasil e no mundo. Reunimos de fontes
+            oficiais e levamos você direto à matéria original.
           </p>
         </div>
       </div>
 
       <Secao className="py-10 md:py-14">
-        {ordenadas.length === 0 ? (
+        {escopos.length > 0 && (
+          <div className="flex gap-2 overflow-x-auto pb-2 mb-6"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+            {escopos.map((e) => {
+              const ativo = escopo === e;
+              return (
+                <button key={e} onClick={() => setEscopo(e)}
+                  className="flex-shrink-0 h-10 px-5 rounded-lg text-sm font-medium border transition-colors"
+                  style={{
+                    background: ativo ? T.roxoSuave : T.cartao,
+                    color: ativo ? T.roxoTinta : T.texto,
+                    borderColor: ativo ? T.roxo + "55" : T.borda,
+                  }}>
+                  {e}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {carregando && (
+          <div className="grid gap-4 md:grid-cols-2" aria-busy="true" aria-live="polite">
+            <span className="sr-only">Carregando notícias…</span>
+            {[0, 1, 2, 3].map((i) => (
+              <Cartao key={i} className="p-6">
+                <div className="h-3 w-24 rounded" style={{ background: T.borda }} />
+                <div className="h-4 w-full rounded mt-4" style={{ background: T.borda }} />
+                <div className="h-4 w-3/4 rounded mt-2" style={{ background: T.borda }} />
+              </Cartao>
+            ))}
+          </div>
+        )}
+
+        {!carregando && lista.length > 0 && (
+          <>
+            <div className="grid gap-4 md:grid-cols-2">
+              {lista.map((n, i) => (
+                <Cartao key={`${n.link}-${i}`} className="p-6 flex flex-col">
+                  <div className="flex items-center gap-2.5 flex-wrap">
+                    <span className="text-xs px-2.5 py-1 rounded-md font-medium"
+                      style={{ background: T.roxoSuave, color: T.roxo }}>{n.fonte}</span>
+                    {n.escopo && (
+                      <span className="text-xs px-2.5 py-1 rounded-md font-medium"
+                        style={{ background: T.rosaSuave, color: T.rosaTinta }}>{n.escopo}</span>
+                    )}
+                    <span className="text-xs" style={{ color: T.apagado }}>{formatarData(n.data)}</span>
+                  </div>
+                  <p className="font-bold text-base leading-snug mt-3 flex-1" style={{ color: T.tinta }}>
+                    {n.titulo}
+                  </p>
+                  <a href={n.link} target="_blank" rel="noopener noreferrer"
+                    className="text-sm font-semibold mt-4 inline-flex items-center gap-1.5 self-start"
+                    style={{ color: T.roxo }}
+                    aria-label={`Ler "${n.titulo}" no site da ${n.fonte} — abre em nova aba`}>
+                    Ler na fonte <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                  </a>
+                </Cartao>
+              ))}
+            </div>
+
+            <p className="text-xs mt-6 flex items-start gap-2" style={{ color: T.apagado }}>
+              <Info className="w-4 h-4 flex-shrink-0 mt-px" aria-hidden="true" />
+              <span>
+                Reunimos títulos publicados por Agência Brasil, Agência Senado e ONU Mulheres.
+                Os textos pertencem a cada veículo — os links levam à matéria original.
+                {dados?.atualizadoEm && ` Atualizado em ${formatarData(dados.atualizadoEm.slice(0, 10))}.`}
+              </span>
+            </p>
+          </>
+        )}
+
+        {!carregando && lista.length === 0 && (
           <Cartao className="p-10 md:p-14 text-center">
             <span className="w-16 h-16 rounded-full mx-auto flex items-center justify-center mb-5"
               style={{ background: T.roxoSuave }}>
               <Newspaper className="w-7 h-7" style={{ color: T.roxo }} aria-hidden="true" />
             </span>
             <p className="font-bold text-lg" style={{ color: T.tinta }}>
-              Ainda não há notícias publicadas
+              Nenhuma notícia nova por enquanto
             </p>
             <p className="text-sm mt-2.5 leading-relaxed max-w-md mx-auto" style={{ color: T.texto }}>
-              Esta área está pronta e será atualizada com campanhas, eventos e informes da rede.
-              Enquanto isso, o diretório de serviços e o assistente já estão no ar.
+              Esta lista é atualizada todo dia a partir de fontes oficiais. Quando não há
+              publicação nova sobre leis e direitos das mulheres, ela fica vazia — preferimos
+              isso a encher a página com o que não é do assunto.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center mt-7">
-              <Link to="/emergencia"
+              <Link to="/app/direitos"
                 className="h-11 px-5 rounded-lg text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
                 style={{ background: T.roxo }}>
-                Ver a rede de atendimento <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                Conhecer meus direitos <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
-              <Link to="/projetos"
+              <Link to="/jogos"
                 className="h-11 px-5 rounded-lg text-sm font-semibold inline-flex items-center justify-center border"
                 style={{ borderColor: T.borda, color: T.texto }}>
-                Conhecer os projetos
+                Jogos educativos
               </Link>
             </div>
           </Cartao>
-        ) : (
-          <>
-            {categorias.length > 2 && (
-              <div className="flex gap-2 overflow-x-auto pb-2 mb-6"
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
-                {categorias.map((c) => {
-                  const ativo = cat === c;
-                  return (
-                    <button key={c} onClick={() => setCat(c)}
-                      className="flex-shrink-0 h-10 px-5 rounded-lg text-sm font-medium border transition-colors"
-                      style={{
-                        background: ativo ? T.roxoSuave : T.cartao,
-                        color: ativo ? T.roxoTinta : T.texto,
-                        borderColor: ativo ? T.roxo + "55" : T.borda,
-                      }}>
-                      {c}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {lista.map((n) => (
-                <Cartao key={n.id} className="p-6">
-                  <div className="flex items-center gap-2.5 flex-wrap">
-                    {n.categoria && (
-                      <span className="text-xs px-2.5 py-1 rounded-md font-medium"
-                        style={{ background: T.roxoSuave, color: T.roxo }}>{n.categoria}</span>
-                    )}
-                    <span className="text-xs" style={{ color: T.apagado }}>{formatarData(n.data)}</span>
-                  </div>
-                  <p className="font-bold text-base leading-snug mt-3" style={{ color: T.tinta }}>
-                    {n.titulo}
-                  </p>
-                  {n.resumo && (
-                    <p className="text-sm mt-2 leading-relaxed" style={{ color: T.texto }}>{n.resumo}</p>
-                  )}
-                  {n.link && (
-                    <a href={n.link} target="_blank" rel="noopener noreferrer"
-                      className="text-sm font-semibold mt-4 inline-flex items-center gap-1.5"
-                      style={{ color: T.roxo }}>
-                      Leia mais <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-                    </a>
-                  )}
-                </Cartao>
-              ))}
-            </div>
-          </>
         )}
       </Secao>
 

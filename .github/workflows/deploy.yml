@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Rebuild diario so para atualizar a secao de Noticias: o coletor roda como
+  # etapa do build, entao o site continua sendo apenas arquivos estaticos --
+  # sem servidor, sem CORS e sem chave de API.
+  schedule:
+    - cron: "0 9 * * *"
 
 permissions:
   contents: write
@@ -23,6 +28,11 @@ jobs:
 
       - name: Instalar dependências
         run: npm ci
+
+      - name: Coletar notícias (leis, decretos e avanços para as mulheres)
+        # Se uma fonte estiver fora do ar, seguimos com o public/noticias.json
+        # versionado no repositorio em vez de derrubar o deploy inteiro.
+        run: node scripts/coletar-noticias.mjs || echo "coleta falhou; mantendo o arquivo anterior"
 
       - name: Gerar build de produção
         run: npm run build
