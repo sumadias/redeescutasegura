@@ -41,6 +41,7 @@ import SobreARede from './pages/site/SobreARede';
 import NossosProjetos from './pages/site/NossosProjetos';
 import Noticias from './pages/site/Noticias';
 import JogosEducativos from './pages/site/JogosEducativos';
+import JogoPartida from './pages/site/JogoPartida';
 import Agendamento from './pages/app/Agendamento';
 import PlanoSeguranca from './pages/app/PlanoSeguranca';
 import CartasParaMim from './pages/app/CartasParaMim';
@@ -81,6 +82,7 @@ const AuthenticatedApp = () => {
         <Route path="/projetos" element={<NossosProjetos />} />
         <Route path="/noticias" element={<Noticias />} />
         <Route path="/jogos" element={<JogosEducativos />} />
+        <Route path="/jogos/:jogoId" element={<JogoPartida />} />
       </Route>
 
       {/* Rotas públicas — sem login */}

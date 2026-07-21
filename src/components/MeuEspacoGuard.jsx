@@ -17,7 +17,8 @@ export default function MeuEspacoGuard() {
         <div className="space-y-2">
           <h1 className="text-xl font-semibold" style={{ color: "#292524" }}>Este espaço é privado</h1>
           <p className="text-sm leading-relaxed" style={{ color: "#57534E" }}>
-            Entre com segurança para acessar seus registros, conteúdos e ferramentas de cuidado.
+            O diário, o plano de segurança e as cartas ficam guardados na sua conta — só você
+            tem acesso. Para usar, entre ou crie o seu espaço.
           </p>
         </div>
 
@@ -30,8 +31,18 @@ export default function MeuEspacoGuard() {
             Entrar com segurança
           </button>
 
+          {/* Faltava o caminho do cadastro: quem ainda não tem conta chegava aqui
+              e só tinha a opção de entrar, sem saber como criar a sua. */}
           <button
-            onClick={() => navigate("/app/menu")}
+            onClick={() => navigate(`/register?next=${encodeURIComponent(window.location.pathname)}`)}
+            className="w-full h-12 rounded-xl text-sm font-semibold border-2 transition-colors"
+            style={{ borderColor: "#9F1239", color: "#9F1239", background: "#fff" }}
+          >
+            Criar meu espaço
+          </button>
+
+          <button
+            onClick={() => navigate("/")}
             className="w-full h-11 rounded-xl text-sm font-semibold border transition-colors"
             style={{ borderColor: "#D6D3D1", color: "#57534E", background: "#fff" }}
           >

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
 import AuthLayout from "@/components/AuthLayout";
+import { destinoPosLogin } from "@/lib/destinoPosLogin";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ export default function Login() {
     setLoading(true);
     try {
       await base44.auth.loginViaEmailPassword(email, password);
-      window.location.href = "/app/menu";
+      window.location.href = destinoPosLogin();
     } catch (err) {
       setError(err.message || "E-mail ou senha inválidos. Tente novamente.");
     } finally {

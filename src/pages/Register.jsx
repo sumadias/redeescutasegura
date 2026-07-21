@@ -8,6 +8,7 @@ import { UserPlus, Mail, Lock, Loader2, Info } from "lucide-react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import AuthLayout from "@/components/AuthLayout";
 import { toast } from "@/components/ui/use-toast";
+import { destinoPosLogin } from "@/lib/destinoPosLogin";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -48,7 +49,7 @@ export default function Register() {
       if (result?.access_token) {
         base44.auth.setToken(result.access_token);
       }
-      window.location.href = "/app/menu";
+      window.location.href = destinoPosLogin();
     } catch (err) {
       setError(err.message || "Código inválido. Verifique e tente novamente.");
     } finally {
