@@ -36,6 +36,43 @@ const TIPO_ROTULO = {
   policiamento: "Patrulha Maria da Penha",
 };
 
+/* Ordem de exibição por RELEVÂNCIA para quem está em situação de violência —
+   não pela origem do dado. Antes a lista saía na ordem das fontes (arquivo do
+   CNES primeiro, cadastro da equipe depois) e, em Campina Grande, a primeira
+   delegacia/CRAM/abrigo caía na posição 35 de 61: a pessoa tinha que rolar 34
+   clínicas para achar o que foi buscar. */
+const ORDEM_CATEGORIA = [
+  "Delegacia / DEAM",
+  "CRAM",
+  "Abrigo",
+  "Defensoria",
+  "Ministério Público",
+  "CREAS",
+  "Patrulha Maria da Penha",
+  "Perícia / Sala Lilás",
+  "Órgão gestor",
+  "ONG / Coletivo",
+  "Universidade",
+  "UPA / Saúde",
+  "Hospital",
+  "CAPS",
+  "Saúde",
+];
+const posicaoCategoria = (c) => {
+  const i = ORDEM_CATEGORIA.indexOf(c);
+  return i === -1 ? ORDEM_CATEGORIA.length : i;
+};
+function ordenarPorRelevancia(lista) {
+  return [...lista].sort((a, b) => posicaoCategoria(a.categoria) - posicaoCategoria(b.categoria));
+}
+
+/* As categorias que atendem violência contra a mulher de forma especializada.
+   Saúde geral é importante, mas não substitui delegacia, CRAM ou abrigo. */
+const ESPECIALIZADAS = [
+  "Delegacia / DEAM", "CRAM", "Abrigo", "Defensoria",
+  "Ministério Público", "CREAS", "Patrulha Maria da Penha",
+];
+
 function semAcento(t) {
   return String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 }
@@ -260,14 +297,13 @@ export default function RedeMunicipios() {
     const especializados = SERVICOS_ESPECIALIZADOS[ibge] || [];
     const daPlanilha = SERVICOS_LOCAIS[ibge] || [];
     const doCadastro = cadastrados.filter((s) => s.cidadeIbge === ibge);
-    return [...especializados, ...daPlanilha, ...doCadastro];
+    return ordenarPorRelevancia([...especializados, ...daPlanilha, ...doCadastro]);
   }, [municipio, ibge, cadastrados]);
 
   /* A cidade tem algum serviço ESPECIALIZADO em violência contra a mulher?
      (saúde geral não substitui delegacia/CRAM/abrigo/defensoria) */
-  const ESPECIALIZADOS = ["Delegacia / DEAM", "CRAM", "Abrigo", "Defensoria", "CREAS", "Ministério Público", "Patrulha Maria da Penha"];
   const temEspecializado = useMemo(
-    () => locais.some((s) => ESPECIALIZADOS.includes(s.categoria)),
+    () => locais.some((s) => ESPECIALIZADAS.includes(s.categoria)),
     [locais]
   );
 
@@ -294,6 +330,13 @@ export default function RedeMunicipios() {
       s.servico.toLowerCase().includes(q) || s.categoria.toLowerCase().includes(q) || String(s.telefone).includes(q));
     return base;
   }, [busca, aba, locais]);
+
+  /* Separamos em dois grupos para que a rede especializada não se dilua no
+     meio das unidades de saúde. Só agrupamos na aba "Todos"; nas demais a
+     lista já é de uma categoria só. */
+  const grupoEspecializado = useMemo(() => lista.filter((s) => ESPECIALIZADAS.includes(s.categoria)), [lista]);
+  const grupoDemais = useMemo(() => lista.filter((s) => !ESPECIALIZADAS.includes(s.categoria)), [lista]);
+  const agrupar = aba === "Todos os serviços" && grupoEspecializado.length > 0 && grupoDemais.length > 0;
 
   return (
     <div style={{ background: C.page }}>
@@ -398,9 +441,41 @@ export default function RedeMunicipios() {
           </div>
 
           <div className="space-y-3">
-            {lista.map((s) => (
-              <LinhaServico key={`${s.id}-${s.servico}`} s={s} cidade={municipio?.nome} />
-            ))}
+            {agrupar ? (
+              <>
+                <div className="flex items-center gap-2.5 pt-1">
+                  <ShieldAlert className="w-4 h-4 flex-shrink-0" style={{ color: C.pink }} aria-hidden="true" />
+                  <h3 className="text-sm font-bold" style={{ color: C.pinkInk }}>
+                    Atendimento especializado em violência contra a mulher
+                  </h3>
+                  <span className="text-xs px-2 py-0.5 rounded-md font-medium"
+                    style={{ background: C.pinkSoft, color: C.pinkInk }}>
+                    {grupoEspecializado.length}
+                  </span>
+                </div>
+                {grupoEspecializado.map((s) => (
+                  <LinhaServico key={`${s.id}-${s.servico}`} s={s} cidade={municipio?.nome} />
+                ))}
+
+                <div className="flex items-center gap-2.5 pt-5">
+                  <Stethoscope className="w-4 h-4 flex-shrink-0" style={{ color: C.teal }} aria-hidden="true" />
+                  <h3 className="text-sm font-bold" style={{ color: C.tealInk }}>
+                    Saúde e outros serviços da cidade
+                  </h3>
+                  <span className="text-xs px-2 py-0.5 rounded-md font-medium"
+                    style={{ background: C.tealSoft, color: C.tealInk }}>
+                    {grupoDemais.length}
+                  </span>
+                </div>
+                {grupoDemais.map((s) => (
+                  <LinhaServico key={`${s.id}-${s.servico}`} s={s} cidade={municipio?.nome} />
+                ))}
+              </>
+            ) : (
+              lista.map((s) => (
+                <LinhaServico key={`${s.id}-${s.servico}`} s={s} cidade={municipio?.nome} />
+              ))
+            )}
             {lista.length === 0 && (
               <div className="rounded-xl border p-6 text-center" style={{ background: C.card, borderColor: C.border }}>
                 <MapPin className="w-8 h-8 mx-auto mb-2" style={{ color: "#D1D5DB" }} aria-hidden="true" />
