@@ -3,6 +3,7 @@ import { ArrowRight, ShieldCheck, EyeOff, HeartHandshake, DoorOpen } from "lucid
 import { T } from "@/components/site/tokens";
 import { Secao, TituloSecao, Cartao, FaixaAjuda } from "@/components/site/ui";
 import { LISTA_JOGOS } from "@/data/jogos";
+import GravuraJogos from "@/components/GravuraJogos";
 
 const CORES = {
   sementes: { fg: "#15803D", bg: "#DCFCE7" },
@@ -22,14 +23,22 @@ export default function JogosEducativos() {
     <>
       <div className="relative overflow-hidden"
         style={{ background: "linear-gradient(115deg,#5327B0 0%,#6D3FD4 55%,#7C4DE0 100%)" }}>
-        <div className="max-w-6xl mx-auto px-4 py-12 md:py-16">
-          <h1 className="text-3xl md:text-[42px] font-extrabold text-white tracking-tight leading-tight">
-            Jogos Educativos
-          </h1>
-          <p className="text-sm md:text-lg mt-4 leading-relaxed max-w-2xl" style={{ color: "#E4DBFB" }}>
-            Três jornadas interativas para reconhecer sinais de violência, conhecer direitos e
-            saber a quem recorrer. Sem cadastro e sem deixar rastro no aparelho.
-          </p>
+        {/* mesma estrutura dos outros heros: no desktop a gravura é COLUNA da
+            grade, então nunca encosta no texto; no celular vira fundo apagado */}
+        <div className="max-w-6xl mx-auto px-4 py-12 md:py-16 relative w-full
+                        md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,42%)] md:items-center md:gap-8">
+          <GravuraJogos className="absolute inset-y-0 right-[-24%] h-full w-auto max-w-none opacity-20 pointer-events-none
+                                   md:static md:opacity-100 md:h-auto md:w-full md:col-start-2 md:row-start-1" />
+
+          <div className="relative md:col-start-1 md:row-start-1">
+            <h1 className="text-3xl md:text-[42px] font-extrabold text-white tracking-tight leading-tight">
+              Jogos Educativos
+            </h1>
+            <p className="text-sm md:text-lg mt-4 leading-relaxed max-w-2xl" style={{ color: "#E4DBFB" }}>
+              Três jornadas interativas para reconhecer sinais de violência, conhecer direitos e
+              saber a quem recorrer. Sem cadastro e sem deixar rastro no aparelho.
+            </p>
+          </div>
         </div>
       </div>
 
