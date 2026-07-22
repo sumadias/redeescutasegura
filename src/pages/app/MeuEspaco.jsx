@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import AppFooter from "@/components/AppFooter";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
@@ -24,15 +23,15 @@ function getFraseHoje() {
 }
 
 const RECURSOS = [
-  { icon: BookHeart,    label: "Diário de emoções",           desc: "Registre como você está se sentindo",     path: "/app/diario",    color: "#9F1239", border: "#9F123933" },
-  { icon: ShieldCheck,  label: "Plano de segurança",          desc: "Contatos de confiança e lugar seguro",    path: "/app/plano",     color: "#0F766E", border: "#0F766E33" },
-  { icon: Mail,         label: "Cartas para mim",             desc: "Escreva uma mensagem para o futuro",      path: "/app/cartas",    color: "#9A3412", border: "#9A341233" },
-  { icon: Palette,      label: "Arte & Escuta",               desc: "Expressão criativa e autocuidado",        path: "/app/arte",      color: "#9A3412", border: "#9A341233" },
-  { icon: GraduationCap,label: "Trilha Recomeço",             desc: "Cursos gratuitos e caminhos para autonomia", path: "/app/trilha", color: "#15803D", border: "#15803D33" },
-  { icon: Wind,         label: "Momento de calma",            desc: "Respiração guiada para momentos difíceis", path: "/app/calma",   color: "#0F766E", border: "#0F766E33" },
-  { icon: TrendingUp,   label: "Como estou ao longo do tempo",desc: "Veja seus registros de humor",            path: "/app/humor",    color: "#9A3412", border: "#9A341233" },
-  { icon: Bookmark,     label: "Meus salvos",                 desc: "Cursos e conteúdos que você guardou",     path: "/app/salvos",   color: "#0F766E", border: "#0F766E33" },
-  { icon: Scale,        label: "Meus direitos",               desc: "Informações práticas em linguagem simples",path: "/app/direitos", color: "#0F766E", border: "#0F766E33" },
+  { icon: BookHeart,    label: "Diário de emoções",           desc: "Registre como você está se sentindo",     path: "/app/diario",    color: "#E8235C", border: "#E8235C33" },
+  { icon: ShieldCheck,  label: "Plano de segurança",          desc: "Contatos de confiança e lugar seguro",    path: "/app/plano",     color: "#0D9488", border: "#0D948833" },
+  { icon: Mail,         label: "Cartas para mim",             desc: "Escreva uma mensagem para o futuro",      path: "/app/cartas",    color: "#EA580C", border: "#EA580C33" },
+  { icon: Palette,      label: "Arte & Escuta",               desc: "Expressão criativa e autocuidado",        path: "/app/arte",      color: "#EA580C", border: "#EA580C33" },
+  { icon: GraduationCap,label: "Trilha Recomeço",             desc: "Cursos gratuitos e caminhos para autonomia", path: "/app/trilha", color: "#0D9488", border: "#0D948833" },
+  { icon: Wind,         label: "Momento de calma",            desc: "Respiração guiada para momentos difíceis", path: "/app/calma",   color: "#0D9488", border: "#0D948833" },
+  { icon: TrendingUp,   label: "Como estou ao longo do tempo",desc: "Veja seus registros de humor",            path: "/app/humor",    color: "#EA580C", border: "#EA580C33" },
+  { icon: Bookmark,     label: "Meus salvos",                 desc: "Cursos e conteúdos que você guardou",     path: "/app/salvos",   color: "#0D9488", border: "#0D948833" },
+  { icon: Scale,        label: "Meus direitos",               desc: "Informações práticas em linguagem simples",path: "/app/direitos", color: "#0D9488", border: "#0D948833" },
 ];
 
 export default function MeuEspaco() {
@@ -43,10 +42,15 @@ export default function MeuEspaco() {
     base44.auth.me().then(setUser).catch(() => {});
   }, []);
 
-  const handleLogout = () => { base44.auth.logout("/app/menu"); };
+  /* Ao sair, volta para a própria porta do Meu Espaço — que sem sessão mostra a
+     tela "Este espaço é privado", com entrar e criar conta. Antes ia para
+     /app/menu, uma tela antiga que não tem nada a ver com o fluxo. */
+  const handleLogout = () => {
+    base44.auth.logout(`${window.location.origin}/app/meu-espaco`);
+  };
 
   return (
-    <div className="flex flex-col" style={{ background: "#FAF9F7" }}>
+    <div className="flex flex-col" style={{ background: "#F8F7FC" }}>
       <main className="flex-1 px-4 pt-14 pb-10 max-w-md mx-auto w-full space-y-6">
 
         {/* Cabeçalho com marca-d'água */}
@@ -56,14 +60,14 @@ export default function MeuEspaco() {
           className="pt-4 flex items-center justify-between relative overflow-hidden"
         >
           <div className="absolute -top-2 -right-4 pointer-events-none" aria-hidden="true">
-            <GravuraBroto size={140} color="#0F766E" opacity={0.10} />
+            <GravuraBroto size={140} color="#0D9488" opacity={0.10} />
           </div>
           <div>
-            <h1 className="text-2xl font-semibold" style={{ color: "#292524", fontFamily: "var(--font-lora)" }}>
+            <h1 className="text-2xl font-semibold" style={{ color: "#1F1B33", fontFamily: "var(--font-lora)" }}>
               Meu espaço
             </h1>
             {user?.full_name && (
-              <p className="text-sm mt-0.5" style={{ color: "#57534E" }}>
+              <p className="text-sm mt-0.5" style={{ color: "#4B4667" }}>
                 Olá, {user.full_name.split(" ")[0]}
               </p>
             )}
@@ -71,7 +75,7 @@ export default function MeuEspaco() {
           <button
             onClick={handleLogout}
             className="flex items-center gap-1.5 text-sm px-3 py-2 rounded-xl border bg-white hover:bg-stone-50 transition-colors focus:outline-none focus:ring-2"
-            style={{ color: "#78716C", borderColor: "#E7E5E4" }}
+            style={{ color: "#7C7898", borderColor: "#E7E3F5" }}
             aria-label="Sair da conta"
           >
             <LogOut className="w-3.5 h-3.5" aria-hidden="true" />
@@ -80,8 +84,8 @@ export default function MeuEspaco() {
         </motion.div>
 
         {/* Frase do dia */}
-        <div className="px-4 py-3 rounded-xl border-l-4" style={{ background: "#FEF5EF", borderLeftColor: "#9A3412" }}>
-          <p className="text-sm italic leading-relaxed" style={{ color: "#9A3412", fontFamily: "var(--font-lora)" }}>
+        <div className="px-4 py-3 rounded-xl border-l-4" style={{ background: "#EDE7FD", borderLeftColor: "#6D3FD4" }}>
+          <p className="text-sm italic leading-relaxed" style={{ color: "#3B1980", fontFamily: "var(--font-lora)" }}>
             "{getFraseHoje()}"
           </p>
         </div>
@@ -93,7 +97,7 @@ export default function MeuEspaco() {
           transition={{ delay: 0.1 }}
           className="space-y-3"
         >
-          <p className="text-sm font-semibold" style={{ color: "#57534E" }}>Seus recursos</p>
+          <p className="text-sm font-semibold" style={{ color: "#4B4667" }}>Seus recursos</p>
           {RECURSOS.map((item, i) => (
             <motion.button
               key={item.path}
@@ -109,8 +113,8 @@ export default function MeuEspaco() {
                 <item.icon className="w-5 h-5" style={{ color: item.color }} aria-hidden="true" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-base leading-tight" style={{ color: "#292524" }}>{item.label}</p>
-                <p className="text-sm mt-0.5" style={{ color: "#57534E" }}>{item.desc}</p>
+                <p className="font-semibold text-base leading-tight" style={{ color: "#1F1B33" }}>{item.label}</p>
+                <p className="text-sm mt-0.5" style={{ color: "#4B4667" }}>{item.desc}</p>
               </div>
               <ChevronRight className="w-4 h-4 flex-shrink-0" style={{ color: item.color + "99" }} />
             </motion.button>
@@ -119,14 +123,14 @@ export default function MeuEspaco() {
 
         {/* Divisor */}
         <div className="flex justify-center py-2">
-          <DivisorCostura width={180} color="#D6D3D1" />
+          <DivisorCostura width={180} color="#E7E3F5" />
         </div>
 
         {/* Nota de privacidade */}
         <div className="flex items-start gap-2.5 rounded-xl px-4 py-3 border bg-white"
-          style={{ borderColor: "#0F766E22" }}>
-          <Lock className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#0F766E" }} aria-hidden="true" />
-          <p className="text-sm leading-relaxed" style={{ color: "#57534E" }}>
+          style={{ borderColor: "#0D948822" }}>
+          <Lock className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#0D9488" }} aria-hidden="true" />
+          <p className="text-sm leading-relaxed" style={{ color: "#4B4667" }}>
             Tudo neste espaço é privado. Profissionais e administração não têm acesso.
           </p>
         </div>
@@ -134,16 +138,15 @@ export default function MeuEspaco() {
         {/* Voltar ao menu */}
         <div className="text-center pt-2">
           <button
-            onClick={() => navigate("/app/menu")}
+            onClick={() => navigate("/")}
             className="text-sm underline underline-offset-2 focus:outline-none focus:ring-2 rounded"
-            style={{ color: "#78716C" }}
+            style={{ color: "#7C7898" }}
           >
             ← Voltar para a Home
           </button>
         </div>
 
       </main>
-      <AppFooter />
     </div>
   );
 }
