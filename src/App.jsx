@@ -75,7 +75,7 @@ const AuthenticatedApp = () => {
       <Route path="/reset-password" element={<ResetPassword />} />
 
       {/* Site institucional — cabecalho e rodape compartilhados, sem login.
-          A /emergencia fica FORA deste layout: ela tem cabecalho proprio. */}
+          Inclui Emergencia e Meu Espaco. */}
       <Route element={<SiteLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/sobre" element={<SobreARede />} />
@@ -83,13 +83,19 @@ const AuthenticatedApp = () => {
         <Route path="/noticias" element={<Noticias />} />
         <Route path="/jogos" element={<JogosEducativos />} />
         <Route path="/jogos/:jogoId" element={<JogoPartida />} />
+
+        {/* Emergencia e Meu Espaco passam a usar o cabecalho e o rodape do
+            site, a pedido: antes eram as unicas paginas sem a navegacao. */}
+        <Route path="/emergencia" element={<Emergencia />} />
+        <Route path="/app/emergencia" element={<Emergencia />} />
+        <Route element={<ProtectedRoute unauthenticatedElement={<MeuEspacoGuard />} />}>
+          <Route path="/app/meu-espaco" element={<MeuEspaco />} />
+        </Route>
       </Route>
 
       {/* Rotas públicas — sem login */}
       <Route path="/app" element={<Navigate to="/app/menu" replace />} />
       <Route path="/app/menu" element={<AppMenu />} />
-      <Route path="/app/emergencia" element={<Emergencia />} />
-      <Route path="/emergencia" element={<Emergencia />} />
       {/* Assistente automático — público, sem login e sem gravar conversa */}
       <Route path="/assistente" element={<Assistente />} />
       <Route path="/app/assistente" element={<Assistente />} />
@@ -102,7 +108,6 @@ const AuthenticatedApp = () => {
       <Route path="/app/direitos" element={<MeusDireitos />} />
       {/* Rotas protegidas — apenas usuários autenticados (qualquer role) */}
       <Route element={<ProtectedRoute unauthenticatedElement={<MeuEspacoGuard />} />}>
-        <Route path="/app/meu-espaco" element={<MeuEspaco />} />
         <Route path="/app/calma" element={<MomentoCalma />} />
         <Route path="/app/humor" element={<GraficoHumor />} />
         <Route path="/app/salvos" element={<MeusSalvos />} />

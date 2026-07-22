@@ -1,14 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { ShieldAlert, Lock } from "lucide-react";
-import QuickExitButton from "@/components/QuickExitButton";
 
 export default function MeuEspacoGuard() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-5 py-10 relative" style={{ background: "#FAFAF9" }}>
-      <QuickExitButton />
-
+    <div className="flex flex-col items-center justify-center px-5 py-16 relative min-h-[70vh]" style={{ background: "#FAFAF9" }}>
       <div className="max-w-sm w-full space-y-6 text-center">
         <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto" style={{ background: "#FFF1F2" }}>
           <Lock className="w-7 h-7" style={{ color: "#9F1239" }} />
@@ -46,7 +43,7 @@ export default function MeuEspacoGuard() {
             className="w-full h-11 rounded-xl text-sm font-semibold border transition-colors"
             style={{ borderColor: "#D6D3D1", color: "#57534E", background: "#fff" }}
           >
-            Voltar ao início
+            Voltar para a Home
           </button>
 
           <button

@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Phone, Shield, MessageCircle } from "lucide-react";
-import QuickExitButton from "@/components/QuickExitButton";
+import { Shield, MessageCircle } from "lucide-react";
 import RedeMunicipios from "@/components/RedeMunicipios";
 import MapaPBNeon from "@/components/MapaPBNeon";
 
@@ -8,59 +7,7 @@ export default function Emergencia() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#FAFAFB" }}>
-      <QuickExitButton />
-
-      {/* Topo institucional.
-          O botão "Sair rapidamente" é fixo (top-3 right-3, ~150px de largura) e
-          flutua acima de tudo com z-50 — ele não participa do layout, então é o
-          cabeçalho que precisa abrir espaço, senão ele cobre justamente o botão
-          de ligar. Em tela de 375px não cabem logo + botão + essa faixa na mesma
-          linha, então no celular o CTA desce para uma segunda linha, em largura
-          total. Além de resolver a colisão, fica um alvo de toque bem maior. */}
-      <div className="bg-white border-b sticky top-0 z-20" style={{ borderColor: "#E5E7EB" }}>
-        <div className="max-w-5xl mx-auto px-4 py-2.5 md:py-0 md:h-16 md:pr-[164px]
-                        flex flex-col md:flex-row md:items-center md:justify-between gap-2.5">
-          {/* o espaçador fica no wrapper, não no botão: dentro do botão ele
-              esticava a área clicável 160px para a direita, e um toque em
-              espaço vazio do cabeçalho voltava a página sem querer */}
-          <div className="self-start pr-[160px] md:pr-0">
-          <button
-            onClick={() => (window.history.length > 1 ? navigate(-1) : navigate("/"))}
-            className="flex items-center gap-2.5 min-w-0"
-            aria-label="Voltar"
-          >
-            <svg viewBox="0 0 512 512" className="w-9 h-9 flex-shrink-0" aria-hidden="true">
-              <defs>
-                <linearGradient id="emgRing" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#5B4BB8" /><stop offset="1" stopColor="#8360D6" />
-                </linearGradient>
-                <radialGradient id="emgHeart" cx="42%" cy="34%" r="75%">
-                  <stop offset="0" stopColor="#FDE7F0" /><stop offset="45%" stopColor="#F8AECB" /><stop offset="100%" stopColor="#EE7DA9" />
-                </radialGradient>
-              </defs>
-              <circle cx="256" cy="256" r="150" fill="none" stroke="url(#emgRing)" strokeWidth="34" />
-              <g transform="translate(171,179) scale(1.7)">
-                <path d="M50,88 C22,66 8,50 8,32 C8,18 18,10 30,10 C40,10 47,17 50,24 C53,17 60,10 70,10 C82,10 92,18 92,32 C92,50 78,66 50,88 Z" fill="url(#emgHeart)" />
-              </g>
-            </svg>
-            <span className="font-bold text-sm leading-tight text-left" style={{ color: "#1F2937" }}>
-              Rede Escuta<br />Segura
-            </span>
-          </button>
-          </div>
-          <a
-            href="tel:180"
-            className="h-11 md:h-10 w-full md:w-auto px-4 rounded-full text-sm font-semibold text-white
-                       inline-flex items-center justify-center gap-2 flex-shrink-0"
-            style={{ background: "#E8235C" }}
-            aria-label="Ligar para o 180 — Central de Atendimento à Mulher"
-          >
-            <Phone className="w-4 h-4" aria-hidden="true" /> Preciso de ajuda agora
-          </a>
-        </div>
-      </div>
-
+    <div className="flex flex-col" style={{ background: "#FAFAFB" }}>
       {/* HERO */}
       <div
         className="relative overflow-hidden min-h-[320px] md:min-h-[380px] flex items-center"

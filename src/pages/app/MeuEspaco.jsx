@@ -7,7 +7,6 @@ import {
   ChevronRight, LogOut, GraduationCap, Wind,
   TrendingUp, Bookmark, Scale, Lock
 } from "lucide-react";
-import QuickExitButton from "@/components/QuickExitButton";
 import { base44 } from "@/api/base44Client";
 import { GravuraBroto, DivisorCostura } from "@/components/art/Gravuras";
 
@@ -47,9 +46,7 @@ export default function MeuEspaco() {
   const handleLogout = () => { base44.auth.logout("/app/menu"); };
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: "#FAF9F7" }}>
-      <QuickExitButton />
-
+    <div className="flex flex-col" style={{ background: "#FAF9F7" }}>
       <main className="flex-1 px-4 pt-14 pb-10 max-w-md mx-auto w-full space-y-6">
 
         {/* Cabeçalho com marca-d'água */}
@@ -141,7 +138,7 @@ export default function MeuEspaco() {
             className="text-sm underline underline-offset-2 focus:outline-none focus:ring-2 rounded"
             style={{ color: "#78716C" }}
           >
-            ← Voltar ao menu principal
+            ← Voltar para a Home
           </button>
         </div>
 
