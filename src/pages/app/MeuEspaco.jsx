@@ -7,6 +7,7 @@ import {
   TrendingUp, Bookmark, Scale, Lock
 } from "lucide-react";
 import { base44 } from "@/api/base44Client";
+import { sairDaConta } from "@/lib/sairDaConta";
 import { GravuraBroto, DivisorCostura } from "@/components/art/Gravuras";
 
 const FRASES = [
@@ -42,12 +43,10 @@ export default function MeuEspaco() {
     base44.auth.me().then(setUser).catch(() => {});
   }, []);
 
-  /* Ao sair, volta para a própria porta do Meu Espaço — que sem sessão mostra a
-     tela "Este espaço é privado", com entrar e criar conta. Antes ia para
-     /app/menu, uma tela antiga que não tem nada a ver com o fluxo. */
-  const handleLogout = () => {
-    base44.auth.logout(`${window.location.origin}/app/meu-espaco`);
-  };
+  /* Sair volta para a porta do Meu Espaço, que sem sessão mostra "Este espaço
+     é privado", com entrar e criar conta. Ver src/lib/sairDaConta.js: o logout
+     do SDK levava para o domínio da Base44, fora do nosso site. */
+  const handleLogout = () => sairDaConta("/app/meu-espaco");
 
   return (
     <div className="flex flex-col" style={{ background: "#F8F7FC" }}>

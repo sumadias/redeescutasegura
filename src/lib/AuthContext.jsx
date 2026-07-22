@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { base44, serverUrl } from '@/api/base44Client';
 import { appParams } from '@/lib/app-params';
 import { createAxiosClient } from '@base44/sdk/dist/utils/axios-client';
+import { sairDaConta, limparSessao } from "@/lib/sairDaConta";
 
 const AuthContext = createContext();
 
@@ -119,11 +120,10 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     
     if (shouldRedirect) {
-      // Use the SDK's logout method which handles token cleanup and redirect
-      base44.auth.logout(window.location.href);
+      sairDaConta(window.location.pathname);
     } else {
-      // Just remove the token without redirect
-      base44.auth.logout();
+      // encerra a sessão sem tirar a pessoa da tela em que ela está
+      limparSessao();
     }
   };
 
