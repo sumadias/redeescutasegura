@@ -35,6 +35,15 @@ export const NAV = [
   { rotulo: "Jogos Educativos", href: "/jogos" },
 ];
 
+/* Contato institucional da Rede. Fica só no rodapé: não existe página nem item
+   de menu "Contato", conforme combinado. Estes canais são para parcerias e
+   imprensa — quem precisa de ajuda usa o 180 ou a página de Emergência. */
+export const CONTATO = {
+  email: "contato@redeescutasegura.com.br",
+  instagram: "https://www.instagram.com/redeescutasegura/",
+  instagramArroba: "@redeescutasegura",
+};
+
 /* Telefones públicos, os mesmos verificados que alimentam a /emergencia */
 export const TELEFONES = [
   { numero: "180", nome: "Disque 180", sub: "Central de Atendimento à Mulher" },

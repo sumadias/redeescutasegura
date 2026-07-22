@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import { Instagram, Mail } from "lucide-react";
 import LogoRES from "./LogoRES";
-import { T, NAV, TELEFONES } from "./tokens";
+import { T, NAV, TELEFONES, CONTATO } from "./tokens";
 
 /* Rodapé do site institucional.
    A coluna "Informações" do layout previa Política de Privacidade, Termos de
@@ -34,6 +35,36 @@ export default function SiteFooter() {
             <LogoRES tamanho={44} escuro id="ftr" />
             <p className="text-sm mt-4 leading-relaxed max-w-[16rem]" style={{ color: "#CFC4F2" }}>
               Você não está sozinha.<br />Estamos aqui por você.
+            </p>
+
+            <a
+              href={`mailto:${CONTATO.email}`}
+              className="text-sm mt-5 inline-flex items-center gap-2 transition-colors hover:text-white break-all"
+              style={{ color: "#CFC4F2" }}
+            >
+              <Mail className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+              {CONTATO.email}
+            </a>
+
+            <a
+              href={CONTATO.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 flex items-center gap-2 text-sm transition-colors hover:text-white w-fit"
+              style={{ color: "#CFC4F2" }}
+              aria-label={`Instagram da Rede Escuta Segura, ${CONTATO.instagramArroba} — abre em nova aba`}
+            >
+              <span
+                className="w-9 h-9 rounded-lg inline-flex items-center justify-center flex-shrink-0"
+                style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.22)" }}
+              >
+                <Instagram className="w-4 h-4" aria-hidden="true" />
+              </span>
+              {CONTATO.instagramArroba}
+            </a>
+
+            <p className="text-xs mt-4 leading-relaxed max-w-[16rem]" style={{ color: "#A697DC" }}>
+              Estes canais são para parcerias e imprensa. Para pedir ajuda, ligue 180 ou 190.
             </p>
           </div>
 
