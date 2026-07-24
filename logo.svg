@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Rede Escuta Segura">
+  <defs>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5B4BB8"/>
+      <stop offset="1" stop-color="#8360D6"/>
+    </linearGradient>
+    <radialGradient id="heart" cx="42%" cy="34%" r="75%">
+      <stop offset="0" stop-color="#FDE7F0"/>
+      <stop offset="45%" stop-color="#F8AECB"/>
+      <stop offset="100%" stop-color="#EE7DA9"/>
+    </radialGradient>
+  </defs>
+
+  <!-- fundo arredondado -->
+  <rect x="16" y="16" width="480" height="480" rx="116" fill="#FFFFFF"/>
+  <!-- leve tom interno -->
+  <circle cx="256" cy="256" r="182" fill="#F7F2FB"/>
+  <!-- anel roxo -->
+  <circle cx="256" cy="256" r="150" fill="none" stroke="url(#ring)" stroke-width="34"/>
+
+  <!-- brilho do coração -->
+  <g transform="translate(161,169) scale(1.9)" opacity="0.35">
+    <path d="M50,88 C22,66 8,50 8,32 C8,18 18,10 30,10 C40,10 47,17 50,24 C53,17 60,10 70,10 C82,10 92,18 92,32 C92,50 78,66 50,88 Z" fill="#F9C6DC"/>
+  </g>
+  <!-- coração -->
+  <g transform="translate(171,179) scale(1.7)">
+    <path d="M50,88 C22,66 8,50 8,32 C8,18 18,10 30,10 C40,10 47,17 50,24 C53,17 60,10 70,10 C82,10 92,18 92,32 C92,50 78,66 50,88 Z" fill="url(#heart)"/>
+    <ellipse cx="34" cy="28" rx="10" ry="7" fill="#FFFFFF" opacity="0.55"/>
+  </g>
+</svg>

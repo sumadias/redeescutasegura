@@ -1,0 +1,57 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Força HTTPS (evita o aviso "Não seguro" quando o acesso chega por http).
+  # Cobre tanto SSL direto no Apache quanto SSL terminado num proxy à frente.
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Rotas do React Router: tudo que não for arquivo/pasta cai no index.html
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Compressão
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml
+</IfModule>
+
+# Cache de assets com hash no nome
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+
+# HostGator usa LiteSpeed, que cacheia o HTML por padrão e faz o deploy demorar
+# a aparecer. Desliga o cache de página do LiteSpeed e marca o HTML como
+# no-cache (os assets têm hash no nome, então podem ser cacheados forte).
+<IfModule LiteSpeed>
+  CacheDisable public /
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+
+  # Só os arquivos de /assets/ têm hash no nome — esses podem ser imutáveis.
+  <FilesMatch "^index-[A-Za-z0-9_-]+\.(js|css)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(svg|png|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+
+  # sw.js e manifest.json NÃO têm hash. Estavam caindo na regra de 1 ano como
+  # "immutable", o que congelava o service worker no navegador de quem já tinha
+  # visitado o site: ele nunca era rebaixado, nunca reinstalava, e o cache dele
+  # continuava servindo a versão antiga do app depois de cada deploy.
+  <FilesMatch "^(sw\.js|manifest\.json)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
