@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   ShieldAlert, MessageCircle, ArrowRight, HeartHandshake, Compass, Network,
-  BookOpen, Home as Casa, Scale, Lock, MapPin,
+  BookOpen, Home as Casa, Scale, Lock, Route, Smartphone,
 } from "lucide-react";
 import MapaPBNeon from "@/components/MapaPBNeon";
 import { T } from "@/components/site/tokens";
@@ -19,6 +19,21 @@ const MISSAO = [
   {
     icone: Network, fg: T.verde, bg: T.verdeSuave, titulo: "Conexão",
     texto: "Encaminhamento para os serviços de proteção e apoio especializado.",
+  },
+];
+
+const GUIAS = [
+  {
+    icone: Route, fg: T.roxo, bg: T.roxoSuave, href: "/orientacao/rota",
+    titulo: "Rota de atendimento", texto: "Por onde começar e o que acontece em cada porta — sem ordem obrigatória.",
+  },
+  {
+    icone: HeartHandshake, fg: T.rosa, bg: T.rosaSuave, href: "/orientacao/ajudando",
+    titulo: "Estou ajudando alguém", texto: "O que dizer, o que evitar e como apoiar com segurança.",
+  },
+  {
+    icone: Smartphone, fg: T.verde, bg: T.verdeSuave, href: "/orientacao/seguranca-digital",
+    titulo: "Segurança digital", texto: "Proteger suas contas e reduzir a vigilância, passo a passo.",
   },
 ];
 
@@ -118,32 +133,54 @@ export default function Home() {
         </div>
       </Secao>
 
-      {/* COBERTURA */}
+      {/* ORIENTAÇÃO — destaque dos guias (substitui o mapa, que já aparece no topo) */}
       <Secao className="pb-10 md:pb-14">
-        <Cartao className="overflow-hidden">
-          <div className="grid md:grid-cols-[1.1fr_1fr] items-center">
-            <div className="p-6 md:p-9">
-              <h2 className="text-2xl font-bold tracking-tight" style={{ color: T.tinta }}>
-                Atuação em todo o estado da Paraíba
-              </h2>
-              <p className="text-sm md:text-base mt-3 leading-relaxed" style={{ color: T.texto }}>
-                O diretório reúne os <strong>223 municípios</strong> paraibanos, com a rede de saúde
-                do Ministério da Saúde e a rede especializada de fontes oficiais. Filtre pela sua
-                cidade e veja o que existe perto de você.
+        <div className="rounded-3xl border p-6 md:p-10"
+          style={{ borderColor: T.borda, background: "linear-gradient(135deg,#F1EBFF 0%,#FCE9F1 100%)" }}>
+          <div className="md:flex md:items-end md:justify-between gap-6 mb-6">
+            <div className="max-w-xl">
+              <p className="text-xs font-bold tracking-[0.16em] uppercase mb-2" style={{ color: T.roxo }}>
+                Orientação
               </p>
-              <Link to="/emergencia"
-                className="mt-6 h-11 px-5 rounded-lg text-sm font-semibold text-white inline-flex items-center gap-2"
-                style={{ background: T.roxo }}>
-                <MapPin className="w-4 h-4" aria-hidden="true" /> Ver a rede por município
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </Link>
+              <h2 className="text-2xl md:text-[28px] font-bold tracking-tight" style={{ color: T.tinta }}>
+                Não sabe por onde começar?
+              </h2>
+              <p className="text-sm md:text-base mt-2 leading-relaxed" style={{ color: T.texto }}>
+                A gente te orienta em cada passo: o que fazer, quais são seus direitos, como se
+                proteger e como ajudar alguém.
+              </p>
             </div>
-            <div className="relative min-h-[220px] md:min-h-[300px] flex items-center justify-center p-6"
-              style={{ background: "linear-gradient(135deg,#1A1145 0%,#2A1A63 100%)" }}>
-              <MapaPBNeon className="w-full h-auto max-w-[420px]" />
-            </div>
+            <Link to="/orientacao"
+              className="hidden md:inline-flex h-11 px-5 rounded-lg text-sm font-semibold text-white items-center gap-2 flex-shrink-0"
+              style={{ background: T.roxo }}>
+              Ver toda a orientação <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
           </div>
-        </Cartao>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {GUIAS.map((g) => (
+              <Link key={g.href} to={g.href}
+                className="rounded-2xl border p-5 transition-colors hover:border-violet-300 flex flex-col"
+                style={{ background: T.cartao, borderColor: T.borda }}>
+                <span className="w-11 h-11 rounded-xl flex items-center justify-center mb-3"
+                  style={{ background: g.bg }}>
+                  <g.icone className="w-5 h-5" style={{ color: g.fg }} aria-hidden="true" />
+                </span>
+                <p className="font-bold text-sm" style={{ color: T.tinta }}>{g.titulo}</p>
+                <p className="text-sm mt-1.5 leading-relaxed flex-1" style={{ color: T.texto }}>{g.texto}</p>
+                <span className="text-sm font-semibold mt-3 inline-flex items-center gap-1.5" style={{ color: g.fg }}>
+                  Abrir <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          <Link to="/orientacao"
+            className="md:hidden mt-5 h-11 w-full rounded-lg text-sm font-semibold text-white inline-flex items-center justify-center gap-2"
+            style={{ background: T.roxo }}>
+            Ver toda a orientação <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
+        </div>
       </Secao>
 
       {/* INFORMATIVOS */}

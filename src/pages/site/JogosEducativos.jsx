@@ -50,9 +50,7 @@ export default function JogosEducativos() {
               <Cartao key={j.id} className="p-6 flex flex-col">
                 <span className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-4"
                   style={{ background: c.bg }} aria-hidden="true">{j.icone}</span>
-                <span className="inline-block text-xs px-2.5 py-1 rounded-md font-medium self-start"
-                  style={{ background: c.bg, color: c.fg }}>{j.publico}</span>
-                <h2 className="font-bold text-lg mt-3 leading-snug" style={{ color: T.tinta }}>{j.titulo}</h2>
+                <h2 className="font-bold text-lg leading-snug" style={{ color: T.tinta }}>{j.titulo}</h2>
                 <p className="text-sm mt-2 leading-relaxed flex-1" style={{ color: T.texto }}>{j.resumo}</p>
                 <ul className="text-xs mt-4 space-y-1" style={{ color: T.apagado }}>
                   <li>{j.missoes.length} missões</li>
@@ -68,6 +66,51 @@ export default function JogosEducativos() {
             );
           })}
         </div>
+
+        {/* Simulador de situações — interativo como os jogos, mas sem pontuação
+            nem missões: é praticar decisões, com direito a tentar de novo. */}
+        <Cartao className="mt-4 p-6 flex flex-col sm:flex-row sm:items-center gap-5">
+          <span className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+            style={{ background: T.rosaSuave }} aria-hidden="true">🧩</span>
+          <div className="flex-1">
+            <span className="inline-block text-xs px-2.5 py-1 rounded-md font-medium"
+              style={{ background: T.rosaSuave, color: T.rosaTinta }}>Sem pontuação</span>
+            <h2 className="font-bold text-lg mt-2 leading-snug" style={{ color: T.tinta }}>
+              Simulador de situações
+            </h2>
+            <p className="text-sm mt-1.5 leading-relaxed" style={{ color: T.texto }}>
+              Praticar decisões em situações fictícias, sem julgamento e sem resposta errada — dá
+              para tentar quantas vezes quiser.
+            </p>
+          </div>
+          <Link to="/jogos/simulador"
+            className="h-11 px-5 rounded-lg text-sm font-semibold text-white inline-flex items-center justify-center gap-2 flex-shrink-0"
+            style={{ background: T.rosa }}>
+            Praticar <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
+        </Cartao>
+
+        {/* Treino de acolhimento — para profissionais (#16), versão por rubrica */}
+        <Cartao className="mt-4 p-6 flex flex-col sm:flex-row sm:items-center gap-5">
+          <span className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0"
+            style={{ background: T.roxoSuave }} aria-hidden="true">🫂</span>
+          <div className="flex-1">
+            <span className="inline-block text-xs px-2.5 py-1 rounded-md font-medium"
+              style={{ background: T.roxoSuave, color: T.roxoTinta }}>Para profissionais</span>
+            <h2 className="font-bold text-lg mt-2 leading-snug" style={{ color: T.tinta }}>
+              Treino de acolhimento
+            </h2>
+            <p className="text-sm mt-1.5 leading-relaxed" style={{ color: T.texto }}>
+              Pratique respostas com uma personagem inteiramente fictícia, com retorno baseado numa
+              rubrica de acolhimento. Não avalia nem certifica ninguém.
+            </p>
+          </div>
+          <Link to="/jogos/treino-acolhimento"
+            className="h-11 px-5 rounded-lg text-sm font-semibold text-white inline-flex items-center justify-center gap-2 flex-shrink-0"
+            style={{ background: T.roxo }}>
+            Praticar <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
+        </Cartao>
 
         <div className="mt-6 rounded-2xl border p-5 flex items-start gap-3"
           style={{ background: "#FFF7ED", borderColor: "#FDBA74" }} role="note">

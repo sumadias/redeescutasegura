@@ -25,14 +25,18 @@ export const T = {
   apagado: "#7C7898",
 };
 
-/* Navegação do site. "Como Ajudar" e "Contato" ficaram de fora a pedido. */
+/* Navegação do site, na ordem da jornada de quem chega: primeiro o que ajuda
+   (Emergência, Orientação, Jogos), depois quem somos (Sobre, Projetos), e a
+   área pessoal (Meu Espaço) por último. "Como Ajudar", "Contato" e "Notícias"
+   ficaram de fora. */
 export const NAV = [
+  { rotulo: "Home", href: "/" },
+  { rotulo: "Emergência", href: "/emergencia" },
+  { rotulo: "Orientação", href: "/orientacao" },
+  { rotulo: "Jogos Educativos", href: "/jogos" },
   { rotulo: "Sobre a Rede", href: "/sobre" },
   { rotulo: "Nossos Projetos", href: "/projetos" },
-  { rotulo: "Emergência", href: "/emergencia" },
-  { rotulo: "Notícias", href: "/noticias" },
   { rotulo: "Meu Espaço", href: "/app/meu-espaco" },
-  { rotulo: "Jogos Educativos", href: "/jogos" },
 ];
 
 /* Contato institucional da Rede. Fica só no rodapé: não existe página nem item

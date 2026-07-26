@@ -11,6 +11,8 @@ const INFORMATIVOS = [
   { rotulo: "O que é violência contra a mulher", href: "/app/o-que-e-violencia" },
   { rotulo: "Quando ocorre a violência doméstica", href: "/app/violencia-domestica" },
   { rotulo: "Meus direitos", href: "/app/direitos" },
+  { rotulo: "Segurança e privacidade", href: "/seguranca" },
+  { rotulo: "Meus dados", href: "/meus-dados" },
   { rotulo: "Assistente da Rede", href: "/assistente" },
 ];
 
@@ -32,17 +34,28 @@ export default function SiteFooter() {
       <div className="max-w-6xl mx-auto px-4 py-10 md:py-12">
         <div className="grid gap-9 md:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
           <div>
-            <LogoRES tamanho={44} escuro id="ftr" />
+            {/* símbolo + nome numa linha só (não mais empilhado em 3 linhas) */}
+            <div className="flex items-center gap-3">
+              <LogoRES tamanho={48} semTexto escuro id="ftr" />
+              <span className="font-bold text-white text-lg leading-tight">Rede Escuta Segura</span>
+            </div>
             <p className="text-sm mt-4 leading-relaxed max-w-[16rem]" style={{ color: "#CFC4F2" }}>
               Você não está sozinha.<br />Estamos aqui por você.
             </p>
 
+            {/* e-mail e Instagram com a MESMA caixinha de ícone, para os dois
+                alinharem — o texto começa exatamente no mesmo ponto. */}
             <a
               href={`mailto:${CONTATO.email}`}
-              className="text-sm mt-5 inline-flex items-center gap-2 transition-colors hover:text-white break-all"
+              className="mt-5 flex items-center gap-2.5 text-sm transition-colors hover:text-white w-fit break-all"
               style={{ color: "#CFC4F2" }}
             >
-              <Mail className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+              <span
+                className="w-9 h-9 rounded-lg inline-flex items-center justify-center flex-shrink-0"
+                style={{ background: "rgba(255,255,255,0.12)", border: "1px solid rgba(255,255,255,0.22)" }}
+              >
+                <Mail className="w-4 h-4" aria-hidden="true" />
+              </span>
               {CONTATO.email}
             </a>
 
@@ -50,7 +63,7 @@ export default function SiteFooter() {
               href={CONTATO.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 flex items-center gap-2 text-sm transition-colors hover:text-white w-fit"
+              className="mt-3 flex items-center gap-2.5 text-sm transition-colors hover:text-white w-fit"
               style={{ color: "#CFC4F2" }}
               aria-label={`Instagram da Rede Escuta Segura, ${CONTATO.instagramArroba} — abre em nova aba`}
             >

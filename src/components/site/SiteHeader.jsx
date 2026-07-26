@@ -28,21 +28,20 @@ export default function SiteHeader() {
       className="bg-white border-b sticky top-0 z-30"
       style={{ borderColor: T.borda }}
     >
-      <div className="max-w-6xl mx-auto px-4 xl:pr-[168px]">
-        <div className="h-[68px] flex items-center gap-4">
-          {/* Com seis itens de menu, o nome escrito ao lado da marca só cabe em
-              telas bem largas. Abaixo disso fica só o símbolo, que já identifica
-              a marca e devolve ~90px para a navegação. */}
+      <div className="max-w-6xl mx-auto px-4 xl:pr-[224px]">
+        <div className="h-[68px] flex items-center gap-3">
+          {/* Só o símbolo da marca — o nome "Rede Escuta Segura" saiu do
+              cabeçalho, e "Home" entrou como primeiro item do menu. */}
           <Link to="/" aria-label="Rede Escuta Segura — início" className="flex-shrink-0">
-            <span className="hidden 2xl:inline-flex"><LogoRES tamanho={38} id="hdr" /></span>
-            <span className="2xl:hidden"><LogoRES tamanho={38} semTexto id="hdrc" /></span>
+            <LogoRES tamanho={38} semTexto id="hdr" />
           </Link>
 
-          <nav aria-label="Navegação principal" className="hidden xl:flex items-center gap-5 ml-2">
+          <nav aria-label="Navegação principal" className="hidden xl:flex items-center gap-3 2xl:gap-5 ml-1">
             {NAV.map((i) => (
               <NavLink
                 key={i.href}
                 to={i.href}
+                end={i.href === "/"}
                 className={linkBase}
                 style={({ isActive }) => ({
                   color: isActive ? T.rosa : T.texto,
@@ -70,7 +69,7 @@ export default function SiteHeader() {
               O gatilho fica à esquerda dessa faixa para não se encostarem. */}
           <button
             onClick={() => setAberto((v) => !v)}
-            className="xl:hidden ml-auto mr-[152px] w-10 h-10 rounded-lg inline-flex items-center justify-center"
+            className="xl:hidden ml-auto mr-[192px] w-10 h-10 rounded-lg inline-flex items-center justify-center"
             style={{ color: T.roxo, background: T.roxoSuave }}
             aria-expanded={aberto}
             aria-controls="menu-site"
@@ -89,6 +88,7 @@ export default function SiteHeader() {
               <NavLink
                 key={i.href}
                 to={i.href}
+                end={i.href === "/"}
                 className="py-3 text-sm font-medium border-b last:border-b-0"
                 style={({ isActive }) => ({
                   color: isActive ? T.rosa : T.texto,

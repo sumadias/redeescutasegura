@@ -37,11 +37,25 @@ import ChatUsuaria from './pages/app/ChatUsuaria';
 import Assistente from './pages/app/Assistente';
 import SiteLayout from './components/site/SiteLayout';
 import RolagemDeRota from './components/RolagemDeRota';
+import BarraAcessibilidade from './components/BarraAcessibilidade';
 import SobreARede from './pages/site/SobreARede';
 import NossosProjetos from './pages/site/NossosProjetos';
-import Noticias from './pages/site/Noticias';
 import JogosEducativos from './pages/site/JogosEducativos';
 import JogoPartida from './pages/site/JogoPartida';
+import SegurancaPrivacidade from './pages/site/SegurancaPrivacidade';
+import Orientacao from './pages/site/Orientacao';
+import RotaAtendimento from './pages/site/RotaAtendimento';
+import EstouAjudando from './pages/site/EstouAjudando';
+import ListaDocumentos from './pages/site/ListaDocumentos';
+import ZonaRural from './pages/site/ZonaRural';
+import Simulador from './pages/site/Simulador';
+import TreinoAcolhimento from './pages/site/TreinoAcolhimento';
+import SegurancaDigital from './pages/site/SegurancaDigital';
+import PlanoFilhos from './pages/site/PlanoFilhos';
+import RelatoOrganizado from './pages/site/RelatoOrganizado';
+import MeusDados from './pages/site/MeusDados';
+import LeituraSimples from './pages/site/LeituraSimples';
+import Agora from './pages/app/Agora';
 import Agendamento from './pages/app/Agendamento';
 import PlanoSeguranca from './pages/app/PlanoSeguranca';
 import CartasParaMim from './pages/app/CartasParaMim';
@@ -67,6 +81,7 @@ const AuthenticatedApp = () => {
     <>
     {/* toda troca de rota comeca no topo; voltar devolve onde a pessoa estava */}
     <RolagemDeRota />
+    <BarraAcessibilidade />
     <Routes>
       {/* Auth routes */}
       <Route path="/login" element={<Login />} />
@@ -80,9 +95,21 @@ const AuthenticatedApp = () => {
         <Route path="/" element={<Home />} />
         <Route path="/sobre" element={<SobreARede />} />
         <Route path="/projetos" element={<NossosProjetos />} />
-        <Route path="/noticias" element={<Noticias />} />
         <Route path="/jogos" element={<JogosEducativos />} />
+        <Route path="/jogos/simulador" element={<Simulador />} />
+        <Route path="/jogos/treino-acolhimento" element={<TreinoAcolhimento />} />
         <Route path="/jogos/:jogoId" element={<JogoPartida />} />
+        <Route path="/seguranca" element={<SegurancaPrivacidade />} />
+        <Route path="/meus-dados" element={<MeusDados />} />
+        <Route path="/orientacao" element={<Orientacao />} />
+        <Route path="/orientacao/rota" element={<RotaAtendimento />} />
+        <Route path="/orientacao/ajudando" element={<EstouAjudando />} />
+        <Route path="/orientacao/documentos" element={<ListaDocumentos />} />
+        <Route path="/orientacao/zona-rural" element={<ZonaRural />} />
+        <Route path="/orientacao/seguranca-digital" element={<SegurancaDigital />} />
+        <Route path="/orientacao/plano-filhos" element={<PlanoFilhos />} />
+        <Route path="/orientacao/relato" element={<RelatoOrganizado />} />
+        <Route path="/orientacao/simples" element={<LeituraSimples />} />
 
         {/* Emergencia e Meu Espaco passam a usar o cabecalho e o rodape do
             site, a pedido: antes eram as unicas paginas sem a navegacao. */}
@@ -92,6 +119,10 @@ const AuthenticatedApp = () => {
           <Route path="/app/meu-espaco" element={<MeuEspaco />} />
         </Route>
       </Route>
+
+      {/* Página "30 segundos" (#13) — mínima e standalone, fora do layout do
+          site de propósito: leveza é o requisito. */}
+      <Route path="/agora" element={<Agora />} />
 
       {/* Rotas públicas — sem login */}
       <Route path="/app" element={<Navigate to="/app/menu" replace />} />

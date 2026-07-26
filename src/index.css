@@ -86,7 +86,9 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-inter);
-    font-size: 16px;
+    /* rem, não px: assim os controles de acessibilidade escalam o texto todo
+       ao mudar o font-size da raiz (html) */
+    font-size: 1rem;
   }
   h1, h2, h3, .font-heading {
     font-family: var(--font-lora);
@@ -103,4 +105,58 @@
     outline-offset: 2px;
     border-radius: 4px;
   }
+}
+
+/* ==========================================================================
+   Acessibilidade (WCAG 2.2 AA / eMAG) — controlada pela BarraAcessibilidade.
+   As classes são aplicadas no <html> pelo hook useAcessibilidade.
+   ========================================================================== */
+
+/* Escala de fonte: rem escala tudo a partir da raiz. */
+html.a11y-fonte-1 { font-size: 112.5%; }  /* ~18px */
+html.a11y-fonte-2 { font-size: 125%; }    /* ~20px */
+html.a11y-fonte-3 { font-size: 140%; }    /* ~22px */
+
+/* Espaçamento maior para leitura (dislexia, baixa visão). */
+html.a11y-espacado p,
+html.a11y-espacado li,
+html.a11y-espacado label,
+html.a11y-espacado a {
+  line-height: 1.9 !important;
+  letter-spacing: 0.02em;
+  word-spacing: 0.08em;
+}
+
+/* Reduzir movimento — respeita a preferência do sistema por padrão... */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* ...e também quando a pessoa liga o controle manualmente. */
+html.a11y-sem-movimento *,
+html.a11y-sem-movimento *::before,
+html.a11y-sem-movimento *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* Sublinhar links — não depender só da cor para distinguir um link (WCAG 1.4.1).
+   Alcança links de conteúdo; deixa de fora botões estilizados como link. */
+html.a11y-sublinhar main a,
+html.a11y-sublinhar article a {
+  text-decoration: underline !important;
+  text-underline-offset: 2px;
+}
+
+/* Trecho sendo lido em voz alta: destaque visível acompanhando o áudio. */
+.a11y-lendo {
+  background: #FDE68A;
+  color: #1F1B33 !important;
+  box-shadow: 0 0 0 2px #FDE68A;
+  border-radius: 3px;
 }
