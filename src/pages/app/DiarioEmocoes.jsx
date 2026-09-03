@@ -78,7 +78,18 @@ export default function DiarioEmocoes() {
         setRegistroHojeId(hoje.id);
         setSalvo(true);
       }
-    } catch {}
+    } catch (e) {
+      /* SEG-11: era catch vazio. O historico aparecia vazio e dava a entender
+         que os registros tinham se perdido. */
+      const sessao = e?.status === 401 || e?.status === 403;
+      toast({
+        variant: "destructive",
+        title: sessao ? "Sua sessão expirou" : "Não foi possível abrir seu diário",
+        description: sessao
+          ? "Entre novamente para ver seus registros."
+          : "Seus registros continuam guardados. Verifique a conexão e recarregue a página.",
+      });
+    }
     setCarregando(false);
   }
 
@@ -116,13 +127,27 @@ export default function DiarioEmocoes() {
   }
 
   async function excluirRegistro(id) {
-    await base44.entities.DiarioEmocao.delete(id);
-    if (id === registroHojeId) {
-      setEmocao(null); setTexto(""); setImagemLocal(null);
-      setDesenhoLocal(null); setAudioLocal(null); setGravuras([]);
-      setRegistroHojeId(null); setSalvo(false);
+    /* Sem try/catch a falha do apagar virava rejeicao nao tratada e a tela
+       ficava igual, sem dizer se o registro saiu ou nao. */
+    try {
+      await base44.entities.DiarioEmocao.delete(id);
+      if (id === registroHojeId) {
+        setEmocao(null); setTexto(""); setImagemLocal(null);
+        setDesenhoLocal(null); setAudioLocal(null); setGravuras([]);
+        setRegistroHojeId(null); setSalvo(false);
+      }
+      await carregarHistorico();
+      toast({ title: "Registro apagado" });
+    } catch (e) {
+      const sessao = e?.status === 401 || e?.status === 403;
+      toast({
+        variant: "destructive",
+        title: sessao ? "Sua sessão expirou" : "O registro NÃO foi apagado",
+        description: sessao
+          ? "Entre novamente e tente outra vez."
+          : "Ele continua guardado na sua conta. Verifique a conexão e tente de novo.",
+      });
     }
-    await carregarHistorico();
   }
 
   function adicionarImagem(e) {

@@ -38,12 +38,14 @@ import Assistente from './pages/app/Assistente';
 import SiteLayout from './components/site/SiteLayout';
 import RolagemDeRota from './components/RolagemDeRota';
 import BarraAcessibilidade from './components/BarraAcessibilidade';
+import TrancaPorInatividade from './components/TrancaPorInatividade';
 import SobreARede from './pages/site/SobreARede';
 import NossosProjetos from './pages/site/NossosProjetos';
 import JogosEducativos from './pages/site/JogosEducativos';
 import JogoPartida from './pages/site/JogoPartida';
 import SegurancaPrivacidade from './pages/site/SegurancaPrivacidade';
 import AppPrivacidade from './pages/site/AppPrivacidade';
+import PoliticaPrivacidade from './pages/site/PoliticaPrivacidade';
 import Orientacao from './pages/site/Orientacao';
 import RotaAtendimento from './pages/site/RotaAtendimento';
 import EstouAjudando from './pages/site/EstouAjudando';
@@ -83,6 +85,8 @@ const AuthenticatedApp = () => {
     {/* toda troca de rota comeca no topo; voltar devolve onde a pessoa estava */}
     <RolagemDeRota />
     <BarraAcessibilidade />
+    {/* Encerra a sessão parada nas rotas com conteúdo pessoal (SEG-01). */}
+    <TrancaPorInatividade />
     <Routes>
       {/* Auth routes */}
       <Route path="/login" element={<Login />} />
@@ -102,6 +106,7 @@ const AuthenticatedApp = () => {
         <Route path="/jogos/:jogoId" element={<JogoPartida />} />
         <Route path="/seguranca" element={<SegurancaPrivacidade />} />
         <Route path="/app-privacidade" element={<AppPrivacidade />} />
+        <Route path="/privacidade" element={<PoliticaPrivacidade />} />
         <Route path="/meus-dados" element={<MeusDados />} />
         <Route path="/orientacao" element={<Orientacao />} />
         <Route path="/orientacao/rota" element={<RotaAtendimento />} />

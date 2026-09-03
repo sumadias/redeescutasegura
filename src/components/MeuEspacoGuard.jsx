@@ -1,5 +1,5 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { ShieldAlert, Lock } from "lucide-react";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { ShieldAlert, Lock, Clock } from "lucide-react";
 import { T } from "@/components/site/tokens";
 
 /* Porta do Meu Espaço para quem não está logada.
@@ -8,7 +8,12 @@ import { T } from "@/components/site/tokens";
 export default function MeuEspacoGuard() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [params] = useSearchParams();
   const destino = encodeURIComponent(pathname);
+
+  /* Chegou aqui porque a sessão foi encerrada por inatividade (SEG-01), e não
+     porque errou o caminho. Sem este aviso, a pessoa acha que perdeu a conta. */
+  const expirou = params.get("expirou") === "1";
 
   return (
     <div
@@ -18,14 +23,19 @@ export default function MeuEspacoGuard() {
       <div className="max-w-sm w-full space-y-6 text-center">
         <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto"
           style={{ background: T.roxoSuave }}>
-          <Lock className="w-7 h-7" style={{ color: T.roxo }} aria-hidden="true" />
+          {expirou
+            ? <Clock className="w-7 h-7" style={{ color: T.roxo }} aria-hidden="true" />
+            : <Lock className="w-7 h-7" style={{ color: T.roxo }} aria-hidden="true" />}
         </div>
 
         <div className="space-y-2">
-          <h1 className="text-xl font-bold" style={{ color: T.tinta }}>Este espaço é privado</h1>
+          <h1 className="text-xl font-bold" style={{ color: T.tinta }}>
+            {expirou ? "Fechamos seu espaço" : "Este espaço é privado"}
+          </h1>
           <p className="text-sm leading-relaxed" style={{ color: T.texto }}>
-            O diário, o plano de segurança e as cartas ficam guardados na sua conta — só você
-            tem acesso. Para usar, entre ou crie o seu espaço.
+            {expirou
+              ? "Como o aparelho ficou um tempo parado, encerramos a sessão para que ninguém encontrasse seu diário aberto. Entre de novo para continuar — está tudo guardado."
+              : "O diário, o plano de segurança e as cartas ficam guardados na sua conta — só você tem acesso. Para usar, entre ou crie o seu espaço."}
           </p>
         </div>
 

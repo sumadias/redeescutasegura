@@ -6,6 +6,7 @@ import {
 import { T } from "@/components/site/tokens";
 import { Secao, Cartao, FaixaAjuda } from "@/components/site/ui";
 import { sairDaConta } from "@/lib/sairDaConta";
+import ApagarDaConta from "@/components/site/ApagarDaConta";
 
 /* #21 Central "Meus Dados" — parte técnica.
  *
@@ -209,6 +210,11 @@ export default function MeusDados() {
           </div>
         )}
 
+        {/* SEG-07: o que está na conta, e a exclusão de tudo de uma vez. Até
+            aqui esta página só alcançava o armazenamento local, e o que ficava
+            no servidor não tinha como ser apagado pela própria pessoa. */}
+        <ApagarDaConta />
+
         {/* Para que usamos cada dado — finalidades (#5 governança / A5) */}
         <div className="mt-8">
           <h2 className="text-base font-bold mb-3" style={{ color: T.tinta }}>Para que usamos seus dados</h2>
@@ -254,9 +260,7 @@ export default function MeusDados() {
           style={{ background: "#FFF7ED", borderColor: "#FDBA74" }} role="note">
           <Info className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: T.ambar }} aria-hidden="true" />
           <p className="text-sm leading-relaxed" style={{ color: "#7C2D12" }}>
-            A definição formal de quem responde pelos seus dados (controlador e encarregado) e dos
-            prazos de guarda está sendo concluída pela equipe. Enquanto isso, dúvidas sobre seus
-            dados podem ser enviadas para <strong>contato@redeescutasegura.com.br</strong>.
+            O controlador dos seus dados é a <strong>Nous Inovação &amp; Tecnologia Inova Simples I.S.</strong> (CNPJ 65.276.411/0001-50) e o encarregado (DPO) é <strong>Victor Higo Alves de Souza</strong>, OAB/PB 27.292. Para exercer seus direitos, escreva para <strong>contato@redeescutasegura.com.br</strong>. A política completa está em <a href="/privacidade" className="underline font-semibold">Política de Privacidade</a>.
           </p>
         </div>
       </div>

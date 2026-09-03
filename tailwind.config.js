@@ -67,6 +67,16 @@ module.exports = {
   				ring: 'hsl(var(--sidebar-ring))'
   			}
   		},
+  		/* SEG-13: dezenas de botões usam `focus:ring-2` sem cor, e o padrão do
+  		   Tailwind é um azul que não existe na identidade do site. O anel passa
+  		   a usar o mesmo roxo do --ring que o :focus-visible do index.css já
+  		   aplica, para os dois se sobreporem em vez de brigarem. */
+  		ringColor: {
+  			DEFAULT: 'hsl(var(--ring) / 0.55)'
+  		},
+  		ringOffsetColor: {
+  			DEFAULT: 'hsl(var(--background))'
+  		},
   		keyframes: {
   			'accordion-down': {
   				from: {

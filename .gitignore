@@ -30,3 +30,16 @@ dist-ssr
 
 .env
 .vite
+
+# Empacotamento Android (TWA / Bubblewrap).
+# A keystore assina o app: quem tiver o arquivo e a senha consegue publicar
+# um APK se passando pelo Rede Escuta Segura. Este repositório é público,
+# então nada disso pode entrar num commit — nem o twa-manifest.json, que
+# guarda o caminho da keystore e o alias.
+*.keystore
+*.jks
+android.keystore
+twa-manifest.json
+*.aab
+*.apk
+/android/

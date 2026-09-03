@@ -4,6 +4,10 @@ import { ArrowLeft, Lock, Send, Trash2, ChevronDown, ChevronUp, PenLine } from "
 import { motion, AnimatePresence } from "framer-motion";
 import QuickExitButton from "@/components/QuickExitButton";
 import { base44 } from "@/api/base44Client";
+/* toast era chamado em enviarCarta() sem nunca ter sido importado: ao guardar
+   uma carta a tela lancava ReferenceError, o botao ficava travado em
+   "guardando" e o proprio catch quebrava de novo ao tentar avisar do erro. */
+import { toast } from "@/components/ui/use-toast";
 import { getOrCreateAnonymousId } from "@/lib/anonymousId";
 import { GravuraBroto } from "@/components/art/Gravuras";
 
@@ -49,7 +53,18 @@ export default function CartasParaMim() {
     try {
       const data = await base44.entities.CartaPessoal.filter({}, "-criada_em", 50);
       setCartas(data);
-    } catch {}
+    } catch (e) {
+      /* SEG-11: era catch vazio. A lista abria vazia e parecia que as cartas
+         tinham sumido. */
+      const sessao = e?.status === 401 || e?.status === 403;
+      toast({
+        variant: "destructive",
+        title: sessao ? "Sua sessão expirou" : "Não foi possível abrir suas cartas",
+        description: sessao
+          ? "Entre novamente para ver o que você guardou."
+          : "Suas cartas continuam guardadas. Verifique a conexão e recarregue a página.",
+      });
+    }
     setCarregando(false);
   }
 
@@ -88,8 +103,22 @@ export default function CartasParaMim() {
   }
 
   async function excluir(id) {
-    await base44.entities.CartaPessoal.delete(id);
-    await carregar();
+    /* Sem try/catch a falha do apagar virava rejeicao nao tratada: nada mudava
+       na tela e a pessoa nao sabia se a carta tinha sido apagada. */
+    try {
+      await base44.entities.CartaPessoal.delete(id);
+      await carregar();
+      toast({ title: "Carta apagada" });
+    } catch (e) {
+      const sessao = e?.status === 401 || e?.status === 403;
+      toast({
+        variant: "destructive",
+        title: sessao ? "Sua sessão expirou" : "A carta NÃO foi apagada",
+        description: sessao
+          ? "Entre novamente e tente outra vez."
+          : "Ela continua guardada na sua conta. Verifique a conexão e tente de novo.",
+      });
+    }
   }
 
   return (

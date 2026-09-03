@@ -42,7 +42,19 @@ export default function PlanoSeguranca() {
         setPalavraCodigo(p.palavra_codigo || "");
         setSalvo(true);
       }
-    }).catch(() => {});
+    }).catch((e) => {
+      /* SEG-11: antes este catch era vazio. Quando a leitura falhava, a tela
+         abria em branco e parecia que o plano nunca tinha sido salvo — o pior
+         jeito de falhar numa tela que a pessoa consulta em emergência. */
+      const sessao = e?.status === 401 || e?.status === 403;
+      toast({
+        variant: "destructive",
+        title: sessao ? "Sua sessão expirou" : "Não foi possível abrir seu plano",
+        description: sessao
+          ? "Entre novamente para ver o plano que você guardou."
+          : "Seu plano continua guardado. Verifique a conexão e recarregue a página — não preencha de novo, para não criar um plano duplicado.",
+      });
+    });
   }, []);
 
   function alterarContato(idx, campo, valor) {
@@ -107,7 +119,22 @@ export default function PlanoSeguranca() {
       setChecklist({ documentos: false, remedios: false, chaves: false, dinheiro: false, itens_criancas: false });
       setPalavraCodigo("");
       setSalvo(false);
-    } catch {}
+      toast({ title: "Plano de segurança apagado" });
+    } catch (e) {
+      /* SEG-11: este catch era vazio. Os campos só são limpos depois do await,
+         então nada sumia da tela — mas a pessoa clicava em "apagar", não via
+         reação nenhuma e ia embora sem saber se o lugar seguro e os contatos
+         continuavam guardados. Numa tela de emergência, silêncio é resposta
+         errada: agora a falha aparece e diz que o plano continua lá. */
+      const sessao = e?.status === 401 || e?.status === 403;
+      toast({
+        variant: "destructive",
+        title: sessao ? "Sua sessão expirou" : "O plano NÃO foi apagado",
+        description: sessao
+          ? "Entre novamente e tente apagar outra vez."
+          : "Ele continua guardado na sua conta. Verifique a conexão e tente de novo.",
+      });
+    }
     setApagando(false);
   }
 
