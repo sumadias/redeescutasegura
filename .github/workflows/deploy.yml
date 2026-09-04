@@ -24,6 +24,12 @@ jobs:
       - name: Instalar dependências
         run: npm ci
 
+      - name: Rodar os testes
+        # Antes do build de propósito: se a tranca por inatividade quebrar, o
+        # deploy tem de parar aqui. É uma falha silenciosa — ninguém percebe
+        # uma sessão que deixou de trancar até alguém abrir o aparelho errado.
+        run: npm test
+
       - name: Gerar build de produção
         run: npm run build
         env:
