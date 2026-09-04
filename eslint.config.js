@@ -57,4 +57,22 @@ export default [
       "react-hooks/rules-of-hooks": "error",
     },
   },
+
+  /* Testes. Sem este bloco o ESLint respondia "File ignored because no matching
+     configuration was supplied" e nem olhava para eles — um teste quebrado
+     passaria despercebido pelo npm run lint. Os globais do Vitest (describe,
+     it, expect, vi) vem de globals:true na vitest.config.js e precisam ser
+     declarados aqui para nao virarem no-undef. */
+  {
+    files: ["src/**/*.{test,spec}.{js,jsx}"],
+    ...pluginJs.configs.recommended,
+    languageOptions: {
+      globals: { ...globals.browser, ...globals.vitest },
+      parserOptions: {
+        ecmaVersion: 2022,
+        sourceType: "module",
+        ecmaFeatures: { jsx: true },
+      },
+    },
+  },
 ];
