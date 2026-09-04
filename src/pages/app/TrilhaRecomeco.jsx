@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ExternalLink, GraduationCap, Briefcase, Users, Scale, Monitor, Lightbulb, ChevronRight } from "lucide-react";
+import { ArrowLeft, ExternalLink, GraduationCap, Briefcase, Scale, Lightbulb, ChevronRight } from "lucide-react";
 import QuickExitButton from "@/components/QuickExitButton";
 import { GravuraSol } from "@/components/art/Gravuras";
 

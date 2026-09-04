@@ -10,7 +10,7 @@ import {
   SERVICOS_ESTADUAIS, MUNICIPIOS,
   ORIENTACAO_ZONA_RURAL, DATA_VERIFICACAO,
 } from "@/data/redePB";
-import { SERVICOS_LOCAIS, FONTE_SAUDE } from "@/data/redeSaudePB";
+import { SERVICOS_LOCAIS } from "@/data/redeSaudePB";
 import { SERVICOS_ESPECIALIZADOS } from "@/data/redeEspecializadaPB";
 
 /* Tipos que são SEMPRE sigilosos, independentemente do que estiver cadastrado.

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, FileText, Check, Info } from "lucide-react";
+import { ArrowLeft, Check, Info } from "lucide-react";
 import { T } from "@/components/site/tokens";
-import { Secao, Cartao, FaixaAjuda } from "@/components/site/ui";
+import { Secao, FaixaAjuda } from "@/components/site/ui";
 import { DOCUMENTOS, NIVEL_ROTULO } from "@/data/orientacao";
 
 /* #11 Lista de documentos por serviço.

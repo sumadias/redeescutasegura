@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import AppFooter from "@/components/AppFooter";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Phone, MapPin, Clock, Filter, AlertCircle, Navigation, ExternalLink } from "lucide-react";
+import { ArrowLeft, Phone, MapPin, Clock, Filter, AlertCircle, Navigation } from "lucide-react";
 import { GravuraCaminho } from "@/components/art/Gravuras";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";

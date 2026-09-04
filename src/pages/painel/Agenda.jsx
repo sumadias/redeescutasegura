@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Calendar, Clock, User, RefreshCw, CheckCircle, X, Bell, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, Clock, RefreshCw, CheckCircle, X, Bell, ChevronLeft, ChevronRight } from "lucide-react";
 
 const STATUS_COLORS = {
   agendada: "bg-amber-100 text-amber-700 border-amber-200",

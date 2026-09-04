@@ -4,7 +4,7 @@ import {
   Smartphone, Baby, NotebookPen, Sparkles, ArrowRight,
 } from "lucide-react";
 import { T } from "@/components/site/tokens";
-import { Secao, TituloSecao, Cartao, FaixaAjuda } from "@/components/site/ui";
+import { Secao, TituloSecao, FaixaAjuda } from "@/components/site/ui";
 
 /* Hub de Orientação. Só os guias próprios desta área — não repetimos aqui o que
    já tem lugar no menu (Jogos, Assistente) nem o conteúdo informativo que já

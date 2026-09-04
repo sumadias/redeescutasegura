@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Check, Info } from "lucide-react";
 import { T } from "@/components/site/tokens";
-import { Secao, Cartao, FaixaAjuda } from "@/components/site/ui";
+import { Secao, FaixaAjuda } from "@/components/site/ui";
 import { PERFIS, CHECKLIST } from "@/data/planoFilhos";
 
 /* #3 Plano para filhos e dependentes. Sem nomes, sem gravação. A pessoa escolhe

@@ -6,8 +6,7 @@ import {
 import QuickExitButton from "@/components/QuickExitButton";
 import MapaPBNeon from "@/components/MapaPBNeon";
 import { base44 } from "@/api/base44Client";
-import { MUNICIPIOS } from "@/data/redePB";
-import { responder, responderInformativo, SAUDACAO, detectarCidade, semAcento } from "@/lib/assistenteRede";
+import { responder, responderInformativo, SAUDACAO, detectarCidade } from "@/lib/assistenteRede";
 
 const C = {
   page: "#FAFAFB", card: "#FFFFFF", border: "#E5E7EB",

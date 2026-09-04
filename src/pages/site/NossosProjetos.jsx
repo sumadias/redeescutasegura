@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Sparkles, ArrowRight, FolderOpen } from "lucide-react";
 import { T } from "@/components/site/tokens";
-import { Secao, TituloSecao, Cartao, FaixaAjuda } from "@/components/site/ui";
+import { Secao, Cartao, FaixaAjuda } from "@/components/site/ui";
 import { PROJETOS, SITUACOES } from "@/data/projetos";
 
 const CORES = {

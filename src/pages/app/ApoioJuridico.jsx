@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AppFooter from "@/components/AppFooter";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Phone, MessageCircle, ChevronDown, ChevronUp, Users } from "lucide-react";
+import { ArrowLeft, Phone, MessageCircle, ChevronDown, ChevronUp } from "lucide-react";
 import { motion } from "framer-motion";
 import QuickExitButton from "@/components/QuickExitButton";
 import { mockProfissionais, faqData } from "@/lib/mockData";

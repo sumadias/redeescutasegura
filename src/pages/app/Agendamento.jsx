@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Calendar, Clock, User, CheckCircle, RefreshCw, Mail, ChevronRight } from "lucide-react";
+import { ArrowLeft, User, CheckCircle, RefreshCw, Mail, ChevronRight } from "lucide-react";
 import QuickExitButton from "@/components/QuickExitButton";
 
 const TIPOS = [

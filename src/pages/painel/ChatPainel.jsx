@@ -4,10 +4,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import {
-  MessageCircle, Users, Clock, CheckCircle2, PhoneOff, History, Send,
+  MessageCircle, Users, Clock, PhoneOff, History, Send,
   RefreshCw, ArrowRight, Shield, Star, AlertTriangle
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";

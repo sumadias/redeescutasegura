@@ -1,4 +1,4 @@
-import { Users, ArrowLeftRight, CheckCircle, Clock, GraduationCap, AlertTriangle, FlaskConical } from "lucide-react";
+import { Users, ArrowLeftRight, Clock, GraduationCap, FlaskConical } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, BarChart, Bar } from "recharts";
 import StatCard from "@/components/StatCard";

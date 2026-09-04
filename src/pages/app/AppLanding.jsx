@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Shield, Calculator, Calendar } from "lucide-react";
+import { Shield, Calculator } from "lucide-react";
 import { motion } from "framer-motion";
 import QuickExitButton from "@/components/QuickExitButton";
 

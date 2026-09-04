@@ -6,7 +6,6 @@ import {
   Stethoscope, ShieldCheck, UserPlus, LayoutDashboard, FileText
 } from "lucide-react";
 import QuickExitButton from "@/components/QuickExitButton";
-import { FLAGS } from "@/lib/featureFlags";
 import { base44 } from "@/api/base44Client";
 import { GravuraBroto, DivisorCostura } from "@/components/art/Gravuras";
 import AppFooter from "@/components/AppFooter";

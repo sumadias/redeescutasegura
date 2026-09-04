@@ -1,5 +1,4 @@
 import { Clock, Users, Wifi } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export default function StatusFila({ posicao, status, profissionalNome }) {
   if (status === "ativa") {

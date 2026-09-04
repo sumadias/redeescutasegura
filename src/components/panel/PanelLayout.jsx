@@ -1,9 +1,7 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { LayoutDashboard, ArrowLeftRight, Map, FileText, Building2, Settings, Shield, MessageCircle, CalendarDays } from "lucide-react";
 import { cn } from "@/lib/utils";
 import PanelGuard from "@/components/panel/PanelGuard";
-import { base44 } from "@/api/base44Client";
 
 export default function PanelLayout({ type = "profissional" }) {
   const location = useLocation();

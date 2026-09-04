@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, MapPin, Phone, Clock } from "lucide-react";
+import { Plus } from "lucide-react";
 import { mockServicos, mockProfissionais } from "@/lib/mockData";
 
 const typeLabels = {
