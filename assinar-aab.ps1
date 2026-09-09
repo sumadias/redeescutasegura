@@ -1,18 +1,23 @@
 # Cria a keystore de upload e assina o AAB do Rede Escuta Segura.
 #
-# A senha e digitada AQUI, no seu terminal. Ela nao passa pelo Claude, nao vai
-# para o chat e nao fica gravada em lugar nenhum deste script.
+# A SENHA E GERADA POR ESTE SCRIPT, na sua maquina, no momento em que voce o
+# executa. Voce nao precisa inventar, digitar nem colar senha nenhuma.
+# Ela e gravada em senha-keystore.txt, ao lado da keystore.
 #
-# Rode com:  powershell -ExecutionPolicy Bypass -File .\assinar-aab.ps1
+# O Claude nao gera e nao ve essa senha: ela nasce aqui, no seu computador.
+#
+# Rode com:
+#   powershell -ExecutionPolicy Bypass -File .\assinar-aab.ps1
 
 $ErrorActionPreference = "Stop"
 
-$projeto  = "C:\Users\Dell\Projetos\redeescutasegura"
-$jdk      = "C:\Users\Dell\android-tools\jdk17"
-$keystore = Join-Path $projeto "android.keystore"
-$aabIn    = Join-Path $projeto "app\build\outputs\bundle\release\app-release.aab"
-$aabOut   = Join-Path $projeto "app-release-bundle.aab"
-$alias    = "android"
+$projeto   = "C:\Users\Dell\Projetos\redeescutasegura"
+$jdk       = "C:\Users\Dell\android-tools\jdk17"
+$keystore  = Join-Path $projeto "android.keystore"
+$senhaFile = Join-Path $projeto "senha-keystore.txt"
+$aabIn     = Join-Path $projeto "app\build\outputs\bundle\release\app-release.aab"
+$aabOut    = Join-Path $projeto "app-release-bundle.aab"
+$alias     = "android"
 
 Set-Location $projeto
 
@@ -22,61 +27,71 @@ if (-not (Test-Path $aabIn)) {
   exit 1
 }
 
-# ---------------------------------------------------------------- keystore
+# ------------------------------------------------------------------- senha
 if (Test-Path $keystore) {
-  Write-Host "Keystore ja existe em $keystore — vou reutiliza-la." -ForegroundColor Cyan
+  if (-not (Test-Path $senhaFile)) {
+    Write-Host "A keystore existe mas senha-keystore.txt sumiu." -ForegroundColor Red
+    Write-Host "Sem a senha nao da para assinar. Recupere-a ou apague a" -ForegroundColor Red
+    Write-Host "keystore para gerar outra (so faca isso se o app ainda NAO" -ForegroundColor Red
+    Write-Host "foi publicado)." -ForegroundColor Red
+    exit 1
+  }
+  Write-Host "Keystore ja existe. Reutilizando." -ForegroundColor Cyan
+  $senha = (Get-Content $senhaFile -Raw).Trim()
 } else {
-  Write-Host ""
-  Write-Host "=== Criando a chave de assinatura ===" -ForegroundColor Cyan
-  Write-Host "Esta chave prova que as atualizacoes do app vem de voces."
-  Write-Host "Escolha uma senha de no minimo 6 caracteres e GUARDE-A."
-  Write-Host ""
+  Write-Host "Gerando senha de 24 caracteres..." -ForegroundColor Cyan
 
-  $senha1 = Read-Host "Senha da keystore" -AsSecureString
-  $senha2 = Read-Host "Repita a senha"     -AsSecureString
+  # Apenas letras e numeros: a senha e passada como argumento para o keytool
+  # e o jarsigner, e simbolos como $ ou " seriam interpretados pelo shell no
+  # meio do caminho — a chave ficaria com uma senha diferente da gravada.
+  $rng   = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+  $chars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789".ToCharArray()
+  $bytes = New-Object byte[] 24
+  $rng.GetBytes($bytes)
+  $senha = -join ($bytes | ForEach-Object { $chars[$_ % $chars.Length] })
 
-  $p1 = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
-          [Runtime.InteropServices.Marshal]::SecureStringToBSTR($senha1))
-  $p2 = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
-          [Runtime.InteropServices.Marshal]::SecureStringToBSTR($senha2))
+  Set-Content -Path $senhaFile -Value $senha -Encoding ascii -NoNewline
+  Write-Host "Senha gravada em senha-keystore.txt" -ForegroundColor Green
 
-  if ($p1 -ne $p2)      { Write-Host "As senhas nao conferem." -ForegroundColor Red; exit 1 }
-  if ($p1.Length -lt 6) { Write-Host "Minimo de 6 caracteres." -ForegroundColor Red; exit 1 }
-
+  Write-Host "Criando a chave de assinatura..." -ForegroundColor Cyan
   $dn = "CN=Rede Escuta Segura, O=Nous Inovacao e Tecnologia, L=Cabedelo, ST=PB, C=BR"
 
   & "$jdk\bin\keytool.exe" -genkeypair `
       -keystore $keystore -alias $alias `
       -keyalg RSA -keysize 2048 -validity 10000 `
-      -storepass $p1 -keypass $p1 -dname $dn
+      -storepass $senha -keypass $senha -dname $dn | Out-Null
 
-  if ($LASTEXITCODE -ne 0) { Write-Host "Falha ao criar a keystore." -ForegroundColor Red; exit 1 }
+  if ($LASTEXITCODE -ne 0) {
+    Write-Host "Falha ao criar a keystore." -ForegroundColor Red
+    Remove-Item $senhaFile -ErrorAction SilentlyContinue
+    exit 1
+  }
   Write-Host "Keystore criada." -ForegroundColor Green
 }
 
-# ---------------------------------------------------------------- assinatura
-Write-Host ""
-Write-Host "=== Assinando o pacote ===" -ForegroundColor Cyan
-$senha = Read-Host "Senha da keystore" -AsSecureString
-$ps = [Runtime.InteropServices.Marshal]::PtrToStringAuto(
-        [Runtime.InteropServices.Marshal]::SecureStringToBSTR($senha))
-
+# -------------------------------------------------------------- assinatura
+Write-Host "Assinando o pacote..." -ForegroundColor Cyan
 Copy-Item $aabIn $aabOut -Force
 
-& "$jdk\bin\jarsigner.exe" -verbose:false `
-    -sigalg SHA256withRSA -digestalg SHA-256 `
-    -keystore $keystore -storepass $ps `
-    $aabOut $alias
+& "$jdk\bin\jarsigner.exe" -sigalg SHA256withRSA -digestalg SHA-256 `
+    -keystore $keystore -storepass $senha $aabOut $alias | Out-Null
 
 if ($LASTEXITCODE -ne 0) { Write-Host "Falha ao assinar." -ForegroundColor Red; exit 1 }
 
-# ---------------------------------------------------------------- conferencia
-Write-Host ""
-Write-Host "=== Conferindo ===" -ForegroundColor Cyan
-& "$jdk\bin\jarsigner.exe" -verify $aabOut | Select-Object -First 3
+$ok = (& "$jdk\bin\jarsigner.exe" -verify $aabOut) -match "jar verified"
+if (-not $ok) { Write-Host "A assinatura nao verificou." -ForegroundColor Red; exit 1 }
+
+$tam = [math]::Round((Get-Item $aabOut).Length / 1MB, 2)
 
 Write-Host ""
-Write-Host "PRONTO: $aabOut" -ForegroundColor Green
+Write-Host "PRONTO - assinatura verificada" -ForegroundColor Green
+Write-Host "  Pacote:  app-release-bundle.aab ($tam MB)"
+Write-Host "  Chave:   android.keystore"
+Write-Host "  Senha:   senha-keystore.txt"
 Write-Host ""
-Write-Host "Guarde uma copia de android.keystore E da senha fora desta maquina." -ForegroundColor Yellow
-Write-Host "Sem elas, o app nunca mais podera ser atualizado." -ForegroundColor Yellow
+Write-Host "AGORA, ANTES DE QUALQUER OUTRA COISA:" -ForegroundColor Yellow
+Write-Host "  Copie android.keystore e senha-keystore.txt para fora desta" -ForegroundColor Yellow
+Write-Host "  maquina (pendrive, gerenciador de senhas, nuvem privada)." -ForegroundColor Yellow
+Write-Host "  Sem os dois, o app nunca mais podera ser atualizado." -ForegroundColor Yellow
+Write-Host ""
+Write-Host "Os dois arquivos estao no .gitignore e nao vao para o GitHub." -ForegroundColor Cyan
