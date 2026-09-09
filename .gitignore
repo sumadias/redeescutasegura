@@ -43,3 +43,15 @@ twa-manifest.json
 *.aab
 *.apk
 /android/
+manifest-checksum.txt
+app/
+gradle/
+gradlew
+gradlew.bat
+build.gradle
+settings.gradle
+gradle.properties
+local.properties
+store_icon.png
+.gradle/
+build/
