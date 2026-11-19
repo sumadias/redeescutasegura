@@ -1,0 +1,29 @@
+# Rede Escuta Segura - regras para buscadores (Google, Bing etc.)
+#
+# Paginas publicas ficam liberadas. Login, cadastro, painel profissional,
+# administracao e telas com dados pessoais ficam fora da busca.
+# Atencao: isto nao protege nada. O arquivo e publico e so os buscadores
+# que seguem a regra obedecem; quem protege os dados e o login.
+
+User-agent: *
+Disallow: /admin
+Disallow: /painel
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /meus-dados
+
+# Area do aplicativo: fechada por padrao, porque ali ficam Meu Espaco,
+# diario, plano de seguranca, cartas e chat. So as quatro paginas
+# informativas abaixo sao publicas. O "$" fecha o endereco, para que uma
+# rota nova com o mesmo comeco nao seja liberada sem querer.
+# Pagina publica nova em /app/ precisa de um Allow aqui e de uma linha
+# no sitemap.xml.
+Disallow: /app/
+Allow: /app/o-que-e-violencia$
+Allow: /app/violencia-domestica$
+Allow: /app/direitos$
+Allow: /app/mapa$
+
+Sitemap: https://redeescutasegura.com.br/sitemap.xml
