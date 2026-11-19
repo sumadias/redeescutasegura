@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "br.com.redeescutasegura.app",
+      "sha256_cert_fingerprints":
+        ["43:F9:0F:EA:16:44:5C:73:B1:B1:44:C6:EB:78:9C:34:F0:AE:B8:03:F3:47:2C:47:C4:72:93:63:6A:34:FC:8B"]
+    }
+  }
+]

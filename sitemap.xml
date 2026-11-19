@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Páginas públicas da Rede Escuta Segura, para os buscadores.
+  Ao criar uma página pública nova, acrescente-a aqui. Se ela ficar em /app/,
+  acrescente também um Allow no robots.txt (lá, /app/ é fechado por padrão).
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://redeescutasegura.com.br/</loc></url>
+  <url><loc>https://redeescutasegura.com.br/emergencia</loc></url>
+  <url><loc>https://redeescutasegura.com.br/orientacao</loc></url>
+  <url><loc>https://redeescutasegura.com.br/orientacao/rota</loc></url>
+  <url><loc>https://redeescutasegura.com.br/orientacao/ajudando</loc></url>
+  <url><loc>https://redeescutasegura.com.br/orientacao/documentos</loc></url>
+  <url><loc>https://redeescutasegura.com.br/orientacao/zona-rural</loc></url>
+  <url><loc>https://redeescutasegura.com.br/orientacao/seguranca-digital</loc></url>
+  <url><loc>https://redeescutasegura.com.br/orientacao/plano-filhos</loc></url>
+  <url><loc>https://redeescutasegura.com.br/orientacao/relato</loc></url>
+  <url><loc>https://redeescutasegura.com.br/orientacao/simples</loc></url>
+  <url><loc>https://redeescutasegura.com.br/seguranca</loc></url>
+  <url><loc>https://redeescutasegura.com.br/sobre</loc></url>
+  <url><loc>https://redeescutasegura.com.br/projetos</loc></url>
+  <url><loc>https://redeescutasegura.com.br/jogos</loc></url>
+  <url><loc>https://redeescutasegura.com.br/agora</loc></url>
+  <url><loc>https://redeescutasegura.com.br/privacidade</loc></url>
+  <url><loc>https://redeescutasegura.com.br/assistente</loc></url>
+  <url><loc>https://redeescutasegura.com.br/app/o-que-e-violencia</loc></url>
+  <url><loc>https://redeescutasegura.com.br/app/violencia-domestica</loc></url>
+  <url><loc>https://redeescutasegura.com.br/app/direitos</loc></url>
+  <url><loc>https://redeescutasegura.com.br/app/mapa</loc></url>
+</urlset>
